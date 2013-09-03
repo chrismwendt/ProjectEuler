@@ -1,0 +1,35 @@
+import java.util.TreeSet;
+
+/*
+In England the currency is made up of pound, £, and pence, p, and there are eight coins in general circulation:
+
+1p, 2p, 5p, 10p, 20p, 50p, £1 (100p) and £2 (200p).
+It is possible to make £2 in the following way:
+
+1£1 + 150p + 220p + 15p + 12p + 31p
+How many different ways can £2 be made using any number of coins?
+ */
+
+public class Problem31 implements Problem {
+    public void run() {
+        TreeSet<Integer> denominations = new TreeSet<Integer>();
+        int[] denominationInts = new int[] {1, 2, 5, 10, 20, 50, 100, 200};
+        for (int denomination : denominationInts) {
+            denominations.add(denomination);
+        }
+        System.out.println(ways(denominations, 200, denominations.last()));
+    }
+
+    private int ways(TreeSet<Integer> denominations, int total, int max) {
+        if (total == 0) {
+            return 0;
+        }
+        
+        int ways = 0;
+        while (total > 0) {
+            ways += (denominations, denominations.floor(total))
+        }
+        
+        return ways;
+    }
+}
