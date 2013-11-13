@@ -18,7 +18,7 @@ Find the value of d  1000 for which 1/d contains the longest recurring cycle in 
  */
 
 public class main {
-    public static void main(String[] args) {
+    public static static void main(String[] args) {
         int longestDenominator = 3; // 1/3 = 0.(3)
         int longestLength = 1;
         for (int d = 4; d < 1000; d++) {
@@ -32,7 +32,7 @@ public class main {
         System.out.println(longestDenominator);
     }
 
-    private int getGroupLength(int d) {
+    private static int getGroupLength(int d) {
         HashMap<Integer, Integer> remainderDigitMap = new HashMap<Integer, Integer>();
         for (int i = 0, remainder = 1; remainder != 0;) {
             int pow10 = (int)Math.ceil(Math.log10((double)d/remainder));

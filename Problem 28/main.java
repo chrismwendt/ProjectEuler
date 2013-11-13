@@ -13,7 +13,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
  */
 
 public class main {
-    public static void main(String[] args) {
+    public static static void main(String[] args) {
         int sum = 1;
         int k = 1001;
         for (int i = 1; i <= (k-1)/2; i++) {

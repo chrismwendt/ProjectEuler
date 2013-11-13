@@ -35,7 +35,7 @@ public class main {
 		System.out.println(sum);
 	}
 
-    private boolean isAbundant(int n) {
+    private static boolean isAbundant(int n) {
         int sum = 1;
         for (int i = 2; i*i <= n; i++) {
             if (n%i == 0) {

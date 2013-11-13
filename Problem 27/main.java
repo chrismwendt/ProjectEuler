@@ -17,7 +17,7 @@
  */
 
 public class main {
-    public static void main(String[] args) {
+    public static static void main(String[] args) {
         int maximumPrimes = 0, maximumProduct = 0;
         for (int b = 2; b < 1000; b++) {
             if (!isPrime(b)) {
@@ -37,7 +37,7 @@ public class main {
         System.out.println(maximumProduct);
     }
 
-    private boolean isPrime(int n) {
+    private static boolean isPrime(int n) {
         if (n < 2 || n % 2 == 0) {
             return false;
         }
@@ -50,7 +50,7 @@ public class main {
         return true;
     }
 
-    private int countPrimes(int a, int b) {
+    private static int countPrimes(int a, int b) {
         for (int n = 0;; n++) {
             if (!isPrime(n * n + a * n + b)) {
                 return n;
