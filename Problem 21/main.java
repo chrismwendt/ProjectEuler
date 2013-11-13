@@ -10,7 +10,7 @@ For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 a
 Evaluate the sum of all the amicable numbers under 10000.
  */
 
-public class Problem21 {
+public class main {
 	public static void main(String[] args) {
 		int sum = 0;
 		for (int i = 1; i < 10000; i++) {

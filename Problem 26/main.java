@@ -17,7 +17,7 @@ Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be see
 Find the value of d  1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
  */
 
-public class Problem26 {
+public class main {
     public static void main(String[] args) {
         int longestDenominator = 3; // 1/3 = 0.(3)
         int longestLength = 1;

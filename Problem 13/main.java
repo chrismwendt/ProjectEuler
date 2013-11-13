@@ -105,7 +105,7 @@ Work out the first ten digits of the sum of the following one-hundred 50-digit n
 53503534226472524250874054075591789781264330331690
  */
 
-public class Problem13 {
+public class main {
 	public static void main(String[] args) {
 		String s = 		"37107287533902102798797998220837590246510135740250"
 						+ "46376937677490009712648124896970078050417018260538"

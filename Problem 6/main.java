@@ -10,7 +10,7 @@ Hence the difference between the sum of the squares of the first ten natural num
 Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
  */
 
-public class Problem6 {
+public class main {
 	public static void main(String[] args) {
 		int n = 100;
 		System.out.println(Math.abs(n*(n+1)*(2*n+1)/6 - square(n*(n+1)/2)));

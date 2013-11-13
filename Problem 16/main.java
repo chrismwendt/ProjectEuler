@@ -6,7 +6,7 @@ import java.math.BigInteger;
 What is the sum of the digits of the number 2^1000?
  */
 
-public class Problem16 {
+public class main {
 	public static void main(String[] args) {
 		BigInteger n = new BigInteger("2");
 		n = n.pow(1000);

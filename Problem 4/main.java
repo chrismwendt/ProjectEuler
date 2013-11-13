@@ -17,7 +17,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
  * 999*999
  */
 
-public class Problem4 {
+public class main {
 	public static void main(String[] args) {
 		int largestPalindrome = 0;
 		for (int a = 999; a > 100 && a*999 > largestPalindrome; a--) {
