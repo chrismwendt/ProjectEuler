@@ -23,8 +23,8 @@ The 12th term, F12, is the first term to contain three digits.
 What is the first term in the Fibonacci sequence to contain 1000 digits?
  */
 
-public class Problem25 implements Problem {
-    public void run() {
+public class Problem25 {
+    public static void main(String[] args) {
         BigInteger a = new BigInteger("0");
         BigInteger b = new BigInteger("1");
         int term;

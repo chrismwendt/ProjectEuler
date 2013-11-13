@@ -11,8 +11,8 @@ As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest numb
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
  */
 
-public class Problem23 implements Problem {
-	public void run() {
+public class Problem23 {
+	public static void main(String[] args) {
 	    HashSet<Integer> abundantNumbers = new HashSet<Integer>();
 	    int sum = 0;
 		for (int i = 1; i < 28123; i++) {

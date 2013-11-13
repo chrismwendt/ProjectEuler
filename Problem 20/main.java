@@ -9,8 +9,8 @@ and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 Find the sum of the digits in the number 100!
  */
 
-public class Problem20 implements Problem {
-	public void run() {
+public class Problem20 {
+	public static void main(String[] args) {
 		BigInteger n = new BigInteger("100");
 		n = factorial(n);
 		String s = n.toString();

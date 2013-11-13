@@ -15,8 +15,8 @@ Find the product abc.
  * b = 1000(a-500)/(a-1000)
  */
 
-public class Problem9 implements Problem {
-	public void run() {
+public class Problem9 {
+	public static void main(String[] args) {
 		for (int a = 1; a < 1000; a++) {
 			int b = 1000 * (a-500) / (a-1000);
 			int c = 1000 - b - a;

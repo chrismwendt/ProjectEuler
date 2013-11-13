@@ -7,8 +7,8 @@ Starting in the top left corner of a 2x2 grid, there are 6 routes (without backt
 How many routes are there through a 20x20 grid?
  */
 
-public class Problem15 implements Problem {
-	public void run() {
+public class Problem15 {
+	public static void main(String[] args) {
 		BigInteger n = new BigInteger("40");
 		BigInteger k = new BigInteger("20");
 		System.out.println(nChooseK(n, k));

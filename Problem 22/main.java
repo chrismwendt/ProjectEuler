@@ -11,8 +11,8 @@ For example, when the list is sorted into alphabetical order, COLIN, which is wo
 What is the total of all the name scores in the file?
  */
 
-public class Problem22 implements Problem {
-	public void run() {
+public class Problem22 {
+	public static void main(String[] args) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(new File("names.txt"));

@@ -4,8 +4,8 @@
 What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
  */
 
-public class Problem5 implements Problem {
-	public void run() {
+public class Problem5 {
+	public static void main(String[] args) {
 		long smallest = 2;
 		for (int a = 3; a <= 20; a++) {
 			System.out.println(String.format("lcm(%d, %d) %d", smallest, a, lcm(smallest, a)));

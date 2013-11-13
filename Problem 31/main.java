@@ -10,8 +10,8 @@ It is possible to make £2 in the following way:
 How many different ways can £2 be made using any number of coins?
  */
 
-public class Problem31 implements Problem {
-    public void run() {
+public class Problem31 {
+    public static void main(String[] args) {
         TreeSet<Integer> denominations = new TreeSet<Integer>();
         int[] denominationInts = new int[] {1, 2, 5, 10, 20, 50, 100, 200};
         for (int denomination : denominationInts) {

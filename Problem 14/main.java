@@ -16,8 +16,8 @@ import java.util.HashMap;
  NOTE: Once the chain starts the terms are allowed to go above one million.
  */
 
-public class Problem14 implements Problem {
-	public void run() {
+public class Problem14 {
+	public static void main(String[] args) {
 		HashMap<Long, Long> map = new HashMap<Long, Long>();
 		map.put(1l, 1l);
 		long longestChain = 1;

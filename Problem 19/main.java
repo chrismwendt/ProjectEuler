@@ -15,8 +15,8 @@ A leap year occurs on any year evenly divisible by 4, but not on a century unles
 How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
  */
 
-public class Problem19 implements Problem {
-	public void run() {
+public class Problem19 {
+	public static void main(String[] args) {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.set(1901, 1, 1);
 		int sundays = 0;

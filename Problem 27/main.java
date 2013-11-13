@@ -16,8 +16,8 @@
  Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of primes for consecutive values of n, starting with n = 0.
  */
 
-public class Problem27 implements Problem {
-    public void run() {
+public class Problem27 {
+    public static void main(String[] args) {
         int maximumPrimes = 0, maximumProduct = 0;
         for (int b = 2; b < 1000; b++) {
             if (!isPrime(b)) {
