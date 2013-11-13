@@ -23,7 +23,7 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 
  */
 
 public class main {
-    public static static void main(String[] args) {
+    public static  void main(String[] args) {
         System.out.println("2783915460");
     }
 }

@@ -17,7 +17,7 @@ Find the sum of all the numbers that can be written as the sum of fifth powers o
  */
 
 public class main {
-    public static static void main(String[] args) {
+    public static  void main(String[] args) {
         int sum = 0;
         for (int i = 10; i < 1000000; i++) {
             if (sumOfFifths(i) == i) {

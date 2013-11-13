@@ -17,7 +17,7 @@
  */
 
 public class main {
-    public static static void main(String[] args) {
+    public static  void main(String[] args) {
         int maximumPrimes = 0, maximumProduct = 0;
         for (int b = 2; b < 1000; b++) {
             if (!isPrime(b)) {

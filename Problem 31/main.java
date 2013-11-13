@@ -11,7 +11,7 @@ How many different ways can £2 be made using any number of coins?
  */
 
 public class main {
-    public static static void main(String[] args) {
+    public static  void main(String[] args) {
         TreeSet<Integer> denominations = new TreeSet<Integer>();
         int[] denominationInts = new int[] {1, 2, 5, 10, 20, 50, 100, 200};
         for (int denomination : denominationInts) {
