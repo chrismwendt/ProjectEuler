@@ -12,28 +12,28 @@ Find the sum of all the positive integers which cannot be written as the sum of 
  */
 
 public class main {
-	public static void main(String[] args) {
-	    HashSet<Integer> abundantNumbers = new HashSet<Integer>();
-	    int sum = 0;
-		for (int i = 1; i < 28123; i++) {
-		    if (isAbundant(i)) {
-		        abundantNumbers.add(i);
-		    }
-		    
-		    boolean isSumOfTwoAbundantNumbers = false;
-		    for (Integer j : abundantNumbers) {
-		        if (abundantNumbers.contains(i - j)) {
-		            isSumOfTwoAbundantNumbers = true;
-		        }
-		    }
-		    
-		    if (!isSumOfTwoAbundantNumbers) {
-		        sum += i;
-		    }
-		}
-		
-		System.out.println(sum);
-	}
+    public static void main(String[] args) {
+        HashSet<Integer> abundantNumbers = new HashSet<Integer>();
+        int sum = 0;
+        for (int i = 1; i < 28123; i++) {
+            if (isAbundant(i)) {
+                abundantNumbers.add(i);
+            }
+            
+            boolean isSumOfTwoAbundantNumbers = false;
+            for (Integer j : abundantNumbers) {
+                if (abundantNumbers.contains(i - j)) {
+                    isSumOfTwoAbundantNumbers = true;
+                }
+            }
+            
+            if (!isSumOfTwoAbundantNumbers) {
+                sum += i;
+            }
+        }
+        
+        System.out.println(sum);
+    }
 
     private static boolean isAbundant(int n) {
         int sum = 1;

@@ -5,24 +5,24 @@ What is the smallest positive number that is evenly divisible by all of the numb
  */
 
 public class main {
-	public static void main(String[] args) {
-		long smallest = 2;
-		for (int a = 3; a <= 20; a++) {
-			System.out.println(String.format("lcm(%d, %d) %d", smallest, a, lcm(smallest, a)));
-			smallest = lcm(smallest, a);
-		}
-		System.out.println(smallest);
-	}
-	
+    public static void main(String[] args) {
+        long smallest = 2;
+        for (int a = 3; a <= 20; a++) {
+            System.out.println(String.format("lcm(%d, %d) %d", smallest, a, lcm(smallest, a)));
+            smallest = lcm(smallest, a);
+        }
+        System.out.println(smallest);
+    }
+    
     private static long lcm(long a, long b) {
-		return a * b / gcd(a, b);
-	}
+        return a * b / gcd(a, b);
+    }
 
     private static long gcd(long a, long b) {
-		if (b == 0) {
-			return a;
-		} else {
-			return gcd(b, a%b);
-		}
-	}
+        if (b == 0) {
+            return a;
+        } else {
+            return gcd(b, a%b);
+        }
+    }
 }
