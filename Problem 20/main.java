@@ -21,7 +21,7 @@ public class main {
 		System.out.println(sum);
 	}
 	
-	private BigInteger factorial(BigInteger n) {
+    private static BigInteger factorial(BigInteger n) {
 		if (n.compareTo(new BigInteger("1")) == 0) {
 			return n;
 		}

@@ -14,12 +14,12 @@ public class main {
 		System.out.println(nChooseK(n, k));
 	}
 	
-	private BigInteger nChooseK(BigInteger n, BigInteger k) {
+    private static BigInteger nChooseK(BigInteger n, BigInteger k) {
 		// n choose k = n! / k!(n-k)!
 		return factorial(n).divide(factorial(k).multiply(factorial(n.subtract(k))));
 	}
 	
-	private BigInteger factorial(BigInteger n) {
+    private static BigInteger factorial(BigInteger n) {
 		if (n.compareTo(new BigInteger("1")) == 0) {
 			return n;
 		}

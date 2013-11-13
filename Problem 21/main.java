@@ -21,7 +21,7 @@ public class main {
 		System.out.println(sum);
 	}
 	
-	private boolean isAmicable(int a) {
+    private static boolean isAmicable(int a) {
 		int b = sum(properDivisors(a));
 		if (sum(properDivisors(b)) == a && a != b) {
 			return true;
@@ -30,7 +30,7 @@ public class main {
 		}
 	}
 
-	private List<Integer> properDivisors(int n) {
+    private static List<Integer> properDivisors(int n) {
 		List<Integer> divisors = new LinkedList<Integer>();
 		for (int i = 1; i <= n/2; i++) {
 			if (n%i == 0) {
@@ -40,7 +40,7 @@ public class main {
 		return divisors;
 	}
 
-	private int sum(List<Integer> list) {
+    private static int sum(List<Integer> list) {
 		int sum = 0;
 		for (Integer i : list) {
 			sum += i;

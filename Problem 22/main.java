@@ -30,7 +30,7 @@ public class main {
 		System.out.println(sum);
 	}
 	
-	private int score(String name) {
+    private static int score(String name) {
 		int sum = 0;
 		for (int i = 0; i < name.length(); i++) {
 			sum += name.charAt(i) - 'A' + 1;

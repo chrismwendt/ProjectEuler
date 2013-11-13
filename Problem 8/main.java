@@ -60,7 +60,7 @@ public class main {
 		System.out.println(largest);
 	}
 	
-	private int valueAt(int index) {
+    private static int valueAt(int index) {
 		return s.charAt(index) - '0';
 	}
 }

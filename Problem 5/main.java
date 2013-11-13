@@ -14,11 +14,11 @@ public class main {
 		System.out.println(smallest);
 	}
 	
-	private long lcm(long a, long b) {
+    private static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
 	}
 
-	private long gcd(long a, long b) {
+    private static long gcd(long a, long b) {
 		if (b == 0) {
 			return a;
 		} else {

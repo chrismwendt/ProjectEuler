@@ -33,7 +33,7 @@ public class main {
 		}
 	}
 	
-	private int count(int number) {
+    private static int count(int number) {
 		int divisors = 0;
 		for (int j = 1; j*j <= number; j++) {
 			if (number%j == 0) {

@@ -32,7 +32,7 @@ public class main {
 		System.out.println(sum);
 	}
 
-	private int letters(int i) {
+    private static int letters(int i) {
 		String ones[] = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 		String tens[] = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
 		String decs[] = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
