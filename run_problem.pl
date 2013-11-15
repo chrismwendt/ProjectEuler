@@ -11,9 +11,7 @@ if ($language eq 'java') {
     print `java main`;
     print `rm main.class`;
 } elsif ($language eq 'haskell') {
-    print `ghc main.hs`;
-    print `./main`;
-    print `rm main.o main.hi main`;
+    print `runhaskell main.hs`;
 }
 
 chdir($cwd) or die "$!";
