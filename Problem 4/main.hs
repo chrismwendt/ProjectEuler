@@ -14,6 +14,6 @@ palindrome n = s == reverse s
 
 mergeBy cmp a [] = a
 mergeBy cmp [] b = b
-mergeBy cmp aas@(a:as) abs@(b:bs)
-    | cmp a b == LT = a : mergeBy cmp as abs
-    | otherwise = b : mergeBy cmp aas bs
+mergeBy cmp (a:as) (b:bs)
+    | cmp a b == LT = a : mergeBy cmp as (b:bs)
+    | otherwise = b : mergeBy cmp (a:as) bs
