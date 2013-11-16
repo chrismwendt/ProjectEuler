@@ -1,12 +1,13 @@
 main = do
-    putStrLn . show $ head $ filter palindrome $ descendingProducts
+    putStrLn . show $ head $ filter palindrome $ descendingProducts ns ns
+    where ns = [999,998..100]
 
-descendingProducts = descendingProducts' 999 999
-
-descendingProducts' n m = n * m : mergeBy descending column rest
+descendingProducts [] _ = []
+descendingProducts _ [] = []
+descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest
     where descending = flip compare
-          column = [n * i | i <- [m,(m - 1)..100]]
-          rest = descendingProducts' (n - 1) (m - 1)
+          column = map (* n) ms
+          rest = descendingProducts ns ms
 
 palindrome n = s == reverse s
     where s = show n
