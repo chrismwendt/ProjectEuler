@@ -3,11 +3,10 @@ main = do
 
 things = things' 999 999
 
-things' n 100 = [n * 100]
-things' 100 m = [100 * m]
-things' n m
-    | n == m = n * m : mergeBy (flip compare) (things' (n - 1) (m - 1)) (things' n (m - 1))
-    | otherwise = n * m : things' n (m - 1)
+things' n m = n * m : mergeBy descending column rest
+    where descending = flip compare
+          column = (map (*n) [m,(m - 1)..100])
+          rest = (things' (n - 1) (m - 1))
 
 palindrome n = s == reverse s
     where s = show n
