@@ -1,12 +1,12 @@
 main = do
-    putStrLn . show $ head $ filter palindrome $ things
+    putStrLn . show $ head $ filter palindrome $ descendingProducts
 
-things = things' 999 999
+descendingProducts = descendingProducts' 999 999
 
-things' n m = n * m : mergeBy descending column rest
+descendingProducts' n m = n * m : mergeBy descending column rest
     where descending = flip compare
           column = (map (*n) [m,(m - 1)..100])
-          rest = (things' (n - 1) (m - 1))
+          rest = (descendingProducts' (n - 1) (m - 1))
 
 palindrome n = s == reverse s
     where s = show n
