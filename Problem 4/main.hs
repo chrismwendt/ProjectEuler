@@ -5,7 +5,7 @@ descendingProducts = descendingProducts' 999 999
 
 descendingProducts' n m = n * m : mergeBy descending column rest
     where descending = flip compare
-          column = (map (*n) [m,(m - 1)..100])
+          column = [n * i | i <- [m,(m - 1)..100]]
           rest = (descendingProducts' (n - 1) (m - 1))
 
 palindrome n = s == reverse s
