@@ -1,5 +1,8 @@
+import Data.List
+import Data.Maybe
+
 main = do
-    putStrLn . show $ head $ filter palindrome $ descendingProducts ns ns
+    putStrLn . show $ fromJust $ find palindrome $ descendingProducts ns ns
     where ns = [999,998..100]
 
 descendingProducts [] _ = []
