@@ -8,7 +8,6 @@ public class main {
     public static void main(String[] args) {
         long smallest = 2;
         for (int a = 3; a <= 20; a++) {
-            System.out.println(String.format("lcm(%d, %d) %d", smallest, a, lcm(smallest, a)));
             smallest = lcm(smallest, a);
         }
         System.out.println(smallest);
