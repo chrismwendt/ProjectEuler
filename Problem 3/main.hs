@@ -6,5 +6,4 @@ primeFactors 1 = []
 primeFactors n = p : primeFactors (n `div` p)
     where p = (factors n) !! 1
 
-main = do
-    putStrLn . show . maximum $ primeFactors 600851475143
+main = print $ maximum $ primeFactors 600851475143

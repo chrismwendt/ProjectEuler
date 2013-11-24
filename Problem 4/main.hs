@@ -1,8 +1,7 @@
 import Data.List
 import Data.Maybe
 
-main = do
-    putStrLn . show $ fromJust $ find palindrome $ descendingProducts ns ns
+main = print $ fromJust $ find palindrome $ descendingProducts ns ns
     where ns = [999,998..100]
 
 descendingProducts [] _ = []
