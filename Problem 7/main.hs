@@ -1,4 +1,4 @@
-main = print $ primes !! 10001
+main = print $ primes !! (10001 - 1) -- zero-based indices
 
 primes :: [Integer]
 primes = 2 : [x | x <- [3,5..], not . any (`divides` x) $ takeWhile (<= sqrt' x) primes]
