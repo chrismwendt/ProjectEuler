@@ -5,29 +5,25 @@ main = print . maximum . map product . consecutivesInGrid 4 . stringToGrid $ gri
 
 consecutivesInGrid n grid = concatMap (consecutivesInList n) . slices $ grid
 
-slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights]
-    where
-        horizontals = id
-        verticals = transpose
-        diagonalLefts = diagonalLefts' 1
-            where
-                diagonalLefts' n [] = []
-                diagonalLefts' n g = concatMap (take 1) (take n g) : diagonalLefts' (n + 1) (filter (not . null) (map (drop 1) (take n g)) ++ drop n g)
-        diagonalRights = diagonalLefts . reverse
+slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights] where
+    horizontals = id
+    verticals = transpose
+    diagonalLefts = diagonalLefts' 1 where
+        diagonalLefts' n [] = []
+        diagonalLefts' n g = concatMap (take 1) (take n g) : diagonalLefts' (n + 1) (filter (not . null) (map (drop 1) (take n g)) ++ drop n g)
+    diagonalRights = diagonalLefts . reverse
 
 consecutivesInList n = map (take n) . filter ((>= n) . length) . tails
 
-consecutivesInGrid' n g = concatMap (\stencil -> selections stencil g) [horizontalStencil, verticalStencil, diagonalLeftStencil, diagonalRightStencil]
-    where
-        horizontalStencil = [replicate n True]
-        verticalStencil = transpose horizontalStencil
-        diagonalLeftStencil = let l = cycle (True : replicate (n - 1) False) in [take n (drop (n - i) l) | i <- [0..(n - 1)]]
-        diagonalRightStencil = reverse diagonalLeftStencil
+consecutivesInGrid' n g = concatMap (\stencil -> selections stencil g) [horizontalStencil, verticalStencil, diagonalLeftStencil, diagonalRightStencil] where
+    horizontalStencil = [replicate n True]
+    verticalStencil = transpose horizontalStencil
+    diagonalLeftStencil = let l = cycle (True : replicate (n - 1) False) in [take n (drop (n - i) l) | i <- [0..(n - 1)]]
+    diagonalRightStencil = reverse diagonalLeftStencil
 
-selections stencil gr = [[g V.! (r + sr) V.! (c + sc) | sr <- [0..V.length s - 1], sc <- [0..V.length (s V.! 0) - 1], s V.! sr V.! sc] | r <- [0..V.length g - V.length s], c <- [0..V.length (g V.! 0) - V.length (s V.! 0)]]
-    where
-        s = V.fromList (map V.fromList stencil)
-        g = V.fromList (map V.fromList gr)
+selections stencil gr = [[g V.! (r + sr) V.! (c + sc) | sr <- [0..V.length s - 1], sc <- [0..V.length (s V.! 0) - 1], s V.! sr V.! sc] | r <- [0..V.length g - V.length s], c <- [0..V.length (g V.! 0) - V.length (s V.! 0)]] where
+    s = V.fromList (map V.fromList stencil)
+    g = V.fromList (map V.fromList gr)
 
 stringToGrid :: String -> [[Int]]
 stringToGrid = map (map read) . map words . lines

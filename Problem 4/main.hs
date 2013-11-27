@@ -1,18 +1,18 @@
 import Data.List
 import Data.Maybe
 
-main = print $ fromJust $ find palindrome $ descendingProducts ns ns
-    where ns = [999,998..100]
+main = print $ fromJust $ find palindrome $ descendingProducts ns ns where
+    ns = [999,998..100]
 
 descendingProducts [] _ = []
 descendingProducts _ [] = []
-descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest
-    where descending = flip compare
-          column = map (* n) ms
-          rest = descendingProducts ns ms
+descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest where
+    descending = flip compare
+    column = map (* n) ms
+    rest = descendingProducts ns ms
 
-palindrome n = s == reverse s
-    where s = show n
+palindrome n = s == reverse s where
+    s = show n
 
 mergeBy cmp a [] = a
 mergeBy cmp [] b = b
