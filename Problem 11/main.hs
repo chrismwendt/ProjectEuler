@@ -5,14 +5,14 @@ main = print . maximum . map product . consecutivesInGrid 4 . stringToGrid $ gri
 consecutivesInGrid n grid = concatMap (consecutivesInList n) . slices $ grid
 
 slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights]
-
-horizontals = id
-verticals = transpose
-diagonalLefts = diagonalLefts' 1
     where
-        diagonalLefts' n [] = []
-        diagonalLefts' n g = concatMap (take 1) (take n g) : diagonalLefts' (n + 1) (filter (not . null) (map (drop 1) (take n g)) ++ drop n g)
-diagonalRights = diagonalLefts . reverse
+        horizontals = id
+        verticals = transpose
+        diagonalLefts = diagonalLefts' 1
+            where
+                diagonalLefts' n [] = []
+                diagonalLefts' n g = concatMap (take 1) (take n g) : diagonalLefts' (n + 1) (filter (not . null) (map (drop 1) (take n g)) ++ drop n g)
+        diagonalRights = diagonalLefts . reverse
 
 consecutivesInList n = map (take n) . filter ((>= n) . length) . tails
 
