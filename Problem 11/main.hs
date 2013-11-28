@@ -1,5 +1,4 @@
 import Data.List
-import qualified Data.Vector as V
 import Data.Maybe
 
 main = print . maximum . map product . consecutivesInGrid 4 . stringToGrid $ gridString
@@ -19,16 +18,6 @@ stagger p = zipWith (++) (triangularList p)
 map2D f = map (map f)
 
 consecutivesInList n = map (take n) . filter ((>= n) . length) . tails
-
-consecutivesInGrid' n g = concatMap (\stencil -> selections stencil g) [horizontalStencil, verticalStencil, diagonalLeftStencil, diagonalRightStencil] where
-    horizontalStencil = [replicate n True]
-    verticalStencil = transpose horizontalStencil
-    diagonalLeftStencil = let l = cycle (True : replicate (n - 1) False) in [take n (drop (n - i) l) | i <- [0..(n - 1)]]
-    diagonalRightStencil = reverse diagonalLeftStencil
-
-selections stencil gr = [[g V.! (r + sr) V.! (c + sc) | sr <- [0..V.length s - 1], sc <- [0..V.length (s V.! 0) - 1], s V.! sr V.! sc] | r <- [0..V.length g - V.length s], c <- [0..V.length (g V.! 0) - V.length (s V.! 0)]] where
-    s = V.fromList (map V.fromList stencil)
-    g = V.fromList (map V.fromList gr)
 
 stringToGrid :: String -> [[Int]]
 stringToGrid = map (map read) . map words . lines
