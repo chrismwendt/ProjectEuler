@@ -1,5 +1,6 @@
 import Data.List
 import qualified Data.Vector as V
+import Data.Maybe
 
 main = print . maximum . map product . consecutivesInGrid 4 . stringToGrid $ gridString
 
@@ -8,10 +9,14 @@ consecutivesInGrid n grid = concatMap (consecutivesInList n) . slices $ grid
 slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights] where
     horizontals = id
     verticals = transpose
-    diagonalLefts = diagonalLefts' 1 where
-        diagonalLefts' n [] = []
-        diagonalLefts' n g = concatMap (take 1) (take n g) : diagonalLefts' (n + 1) (filter (not . null) (map (drop 1) (take n g)) ++ drop n g)
+    diagonalLefts = map2D fromJust . map (filter isJust) . transpose . stagger Nothing . map2D Just
     diagonalRights = diagonalLefts . reverse
+
+triangularList p = iterate (p :) []
+
+stagger p = zipWith (++) (triangularList p)
+
+map2D f = map (map f)
 
 consecutivesInList n = map (take n) . filter ((>= n) . length) . tails
 
