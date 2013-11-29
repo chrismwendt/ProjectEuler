@@ -8,7 +8,7 @@ consecutivesInGrid n grid = concatMap (consecutivesInList n) . slices $ grid
 slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights] where
     horizontals = id
     verticals = transpose
-    diagonalLefts = map2D fromJust . map (filter isJust) . transpose . stagger Nothing . map2D Just
+    diagonalLefts = map catMaybes . transpose . stagger Nothing . map2D Just
     diagonalRights = diagonalLefts . reverse
 
 triangularList p = iterate (p :) []
