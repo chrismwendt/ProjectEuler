@@ -1,9 +1,11 @@
 import Data.List
 import Data.Maybe
 
-main = print . maximum . map product . consecutivesInGrid 4 . stringToGrid $ gridString
+main = print . maximum . map product $ consecutives2D 4 grid
 
-consecutivesInGrid n grid = concatMap (consecutivesInList n) . slices $ grid
+consecutives2D n = concatMap (consecutives n) . slices
+
+consecutives n = map (take n) . filter ((>= n) . length) . tails
 
 slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights] where
     horizontals = id
@@ -11,18 +13,13 @@ slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagona
     diagonalLefts = map catMaybes . transpose . stagger Nothing . map2D Just
     diagonalRights = diagonalLefts . reverse
 
-triangularList p = iterate (p :) []
-
 stagger p = zipWith (++) (triangularList p)
+
+triangularList p = iterate (p :) []
 
 map2D f = map (map f)
 
-consecutivesInList n = map (take n) . filter ((>= n) . length) . tails
-
-stringToGrid :: String -> [[Int]]
-stringToGrid = map2D read . map words . lines
-
-gridString =
+grid = map2D read . map words . lines $
     "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08\n\
     \49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00\n\
     \81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65\n\
