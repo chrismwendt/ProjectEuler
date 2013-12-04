@@ -1,43 +1,10 @@
-import qualified Data.Map as M
-import Data.Maybe
-
 main = print . length . concat . concatMap words . map verbalize $ [1..1000]
 
-verbalizeDigit n = fromJust $ M.lookup n $ M.fromList
-    [ (1, "one")
-    , (2, "two")
-    , (3, "three")
-    , (4, "four")
-    , (5, "five")
-    , (6, "six")
-    , (7, "seven")
-    , (8, "eight")
-    , (9, "nine")
-    ]
+verbalizeDigit = (!!) ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-verbalizeTensDigit n = fromJust $ M.lookup n $ M.fromList
-    [ (2, "twenty")
-    , (3, "thirty")
-    , (4, "fourty")
-    , (5, "fifty")
-    , (6, "sixty")
-    , (7, "seventy")
-    , (8, "eighty")
-    , (9, "ninety")
-    ]
+verbalizeTensDigit = (!!) ["", "", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
-verbalizeTeen n = fromJust $ M.lookup n $ M.fromList
-    [ (0, "ten")
-    , (1, "eleven")
-    , (2, "twelve")
-    , (3, "thirteen")
-    , (4, "fourteen")
-    , (5, "fifteen")
-    , (6, "sixteen")
-    , (7, "seventeen")
-    , (8, "eighteen")
-    , (9, "nineteen")
-    ]
+verbalizeTeen = (!!) ["", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 
 verbalize n
     | n == 1000 = "one thousand"
