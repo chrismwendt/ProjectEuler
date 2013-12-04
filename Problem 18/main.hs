@@ -1,7 +1,5 @@
 main = print . head . foldr1 f $ triangle where
-    f r b = zipWith max c1 c2 where
-        c1 = zipWith (+) r b
-        c2 = zipWith (+) r (tail b)
+    f r b = zipWith (+) r $ zipWith max b (tail b)
 
 triangle :: [[Int]]
 triangle = map (map read) . map words . lines $
