@@ -12,5 +12,5 @@ verbalize n
         (hd, hm) = n `divMod` 100
         (td, tm) = n `divMod` 10
         verbalizeDigit = (!!) (words "zero one two three four five six seven eight nine")
-        verbalizeTensDigit = (!!) (words ". . twenty thirty fourty fifty sixty seventy eighty ninety")
-        verbalizeTeen = (!!) (words ". ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen")
+        verbalizeTensDigit = (!!) (words ". . twenty thirty forty fifty sixty seventy eighty ninety")
+        verbalizeTeen = (!!) (words "ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen")
