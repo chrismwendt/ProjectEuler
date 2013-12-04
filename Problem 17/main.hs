@@ -1,11 +1,5 @@
 main = print . length . concat . concatMap words . map verbalize $ [1..1000]
 
-verbalizeDigit = (!!) ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-verbalizeTensDigit = (!!) ["", "", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"]
-
-verbalizeTeen = (!!) ["", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
-
 verbalize n
     | n == 1000 = "one thousand"
     | n >= 100 && hm == 0 = verbalizeDigit hd ++ " hundred"
@@ -17,3 +11,6 @@ verbalize n
     where
         (hd, hm) = n `divMod` 100
         (td, tm) = n `divMod` 10
+        verbalizeDigit = (!!) ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+        verbalizeTensDigit = (!!) ["", "", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+        verbalizeTeen = (!!) ["", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
