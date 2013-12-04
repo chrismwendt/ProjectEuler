@@ -11,6 +11,6 @@ verbalize n
     where
         (hd, hm) = n `divMod` 100
         (td, tm) = n `divMod` 10
-        verbalizeDigit = (!!) ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-        verbalizeTensDigit = (!!) ["", "", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"]
-        verbalizeTeen = (!!) ["", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+        verbalizeDigit = (!!) (words "zero one two three four five six seven eight nine")
+        verbalizeTensDigit = (!!) (words ". . twenty thirty fourty fifty sixty seventy eighty ninety")
+        verbalizeTeen = (!!) (words ". ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen")
