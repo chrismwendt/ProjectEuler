@@ -12,6 +12,10 @@ if ($language eq 'java') {
     print `rm main.class`;
 } elsif ($language eq 'haskell') {
     print `runhaskell main.hs`;
+} elsif ($language eq 'ghc') {
+    print `ghc -O2 main.hs`;
+    print `./main`;
+    print `rm main.o main.hi main`;
 }
 
 chdir($cwd) or die "$!";
