@@ -7,6 +7,8 @@ cycleLength n d = cycleLength' n d []
 cycleLength' n d rs
     | r == 0 = 0
     | q == 0 = cycleLength' (10 * n) d (r : rs)
-    | elem r rs = length (takeWhile (/= r) rs) + 1
-    | otherwise = cycleLength' r d (r : rs) where
+    | otherwise = case elemIndex r rs of
+        Just i -> i
+        Nothing -> cycleLength' r d (r : rs)
+    where
     (q, r) = quotRem n d
