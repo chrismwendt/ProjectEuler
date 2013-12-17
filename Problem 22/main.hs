@@ -9,4 +9,4 @@ main = do
 
 splitOn s = map T.unpack . T.splitOn (T.pack s) . T.pack
 
-worth = sum . map (\c -> ord(c) - ord('A') + 1)
+worth = sum . map (\c -> ord c - ord 'A'  + 1)
