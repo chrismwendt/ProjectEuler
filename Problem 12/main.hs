@@ -10,4 +10,4 @@ triangleFactors n = length (factors a) * length (factors b) where
 
 factors n = nub $ concatMap f [1..sqrt' n] where
     f i = if n `mod` i == 0 then [i, n `div` i] else []
-    sqrt' x = (floor . sqrt . fromIntegral) x
+    sqrt' = (floor . sqrt . fromIntegral)
