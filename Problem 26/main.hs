@@ -1,5 +1,3 @@
-import Data.Function
-
 main = print $ fst $ maximumBy (length . snd) $ zip [1..] $ map (recurringCycle 1) [1..(1000 - 1)]
 
 recurringCycle n d = recurringCycle' n d []
