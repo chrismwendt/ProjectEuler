@@ -1,4 +1,4 @@
-main = print $ fst $ maximumBy snd $ zip [1..] $ map (cycleLength 1) [1..(1000 - 1)]
+main = print $ fst $ maximumBy snd $ zip [1..] $ map (cycleLength 1) [1..999]
 
 cycleLength n d = cycleLength' n d []
 cycleLength' n d m
