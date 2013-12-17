@@ -29,7 +29,6 @@ public class main {
                 if (count > maximumPrimes) {
                     maximumPrimes = count;
                     maximumProduct = a * b;
-                    System.out.println(a + " " + b + ": " + count);
                 }
             }
         }
