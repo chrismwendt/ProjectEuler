@@ -1,4 +1,7 @@
-main = print $ fst $ maximumBy snd $ zip [1..] $ map (cycleLength 1) [1..999]
+import Data.List
+import Data.Function
+
+main = print $ fst $ maximumBy (compare `on` snd) $ zip [1..] $ map (cycleLength 1) [1..999]
 
 cycleLength n d = cycleLength' n d []
 cycleLength' n d rs
@@ -7,5 +10,3 @@ cycleLength' n d rs
     | elem r rs = length (takeWhile (/= r) rs) + 1
     | otherwise = cycleLength' r d (r : rs) where
     (q, r) = quotRem n d
-
-maximumBy f = foldr1 (\a b -> if compare (f a) (f b) == GT then a else b)
