@@ -1,33 +1,18 @@
-import Data.Numbers.Primes
 import Data.List
-import Data.Maybe
-import Data.Char
+import qualified Data.Set as S
+import qualified Text.Printf as P
 
-main = print $ sum try1
+main = print $ sum $ map read $ filter (not . isPrefixOf "0") $ divisibleConsecutive3s [1,2,3,5,7,11,13,17]
 
-isPandigital n = sort (show n) == ['0'..'9']
+divisibleConsecutive3s divisors = fst $ until (null . snd) f ([""], divisors)
+    where 
+    f (ns, (d:ds)) = (p ns (divs d), ds)
+    divs n = map (P.printf "%03d" :: Integer -> String) $ range 000 999 [0, n..]
+    p l r = filter unique $ [a ++ drop (min (length a) 2) b | a <- l, b <- r, hasOverlap 2 a b]
+    hasOverlap n a b = isPrefixOf (lastN n a) (take n b)
 
-try1 = filter hasProperty $ drop (factorial 9) $ pandigitals 9
+lastN n = reverse . take n . reverse
 
-hasProperty n = (&&) ((n `mod` 1000) `mod` 17 == 0) $ and $ zipWith divisibleBy [2,3,5,7,11,13,17] $ map (read . map intToDigit) $ consecutives 3 (drop 1 $ digits n)
+unique l = length l == S.size (S.fromList l)
 
-digits :: Int -> [Int]
-digits = map digitToInt . show
-
-divisibleBy n x = x `mod` n == 0
-
-consecutives n l = [take n c | c <- tails l, length c >= n]
-
-pandigitals :: Int -> [Int]
-pandigitals n = map (read . nthPermutation ['0'..intToDigit n]) [0..factorial (n + 1) - 1]
-
-nthPermutation a 0 = a
-nthPermutation a n = a !! i : nthPermutation (remove i a) j
-    where
-    (i, j) = divMod n (factorial $ length a - 1)
-
-remove i as = l ++ tail r
-    where
-    (l, r) = splitAt i as
-
-factorial n = product [1..n]
+range a b = takeWhile (<= b) . dropWhile (< a)
