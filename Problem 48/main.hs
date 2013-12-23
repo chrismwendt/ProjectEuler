@@ -1,1 +1,3 @@
-main = putStrLn $ reverse $ take 10 $ reverse $ show $ sum $ [i^i | i <- [1..1000]]
+main = putStrLn $ takeLast 10 $ show $ sum $ [i^i | i <- [1..1000]]
+
+takeLast n = reverse . take n . reverse
