@@ -1,9 +1,9 @@
 main = print $ head $ filter (> 40755) solutions
 
 solutions =
-    [n |
-        n <- [1..],
-        and $ map ($ n) [isTriangular, isPentagonal, isHexagonal]]
+    [t |
+        t <- map triangle [1..],
+        and $ map ($ t) [isPentagonal, isHexagonal]]
 
 triangle n = n * (n + 1) `div` 2
 
