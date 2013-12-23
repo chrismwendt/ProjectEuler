@@ -3,22 +3,26 @@ import Data.List
 import Data.Choose
 import Data.Maybe
 import Data.Function
+import qualified Data.Map as M
 
-main = putStrLn $ head $ filter (/= "148748178147") $ map concat solutions
+main = putStrLn $ head $ filter (/= "148748178147") $ map (concatMap show) solutions
 
 solutions =
     [s |
-        n <- nubBy ((==) `on` sort) $ map show [1000..9999],
-        let pns = nub $ sort $ filter (not . isPrefixOf "0") $ permutations n,
-        length pns >= 3,
-        s <- listChoose' (length pns) 3 pns,
-        let sns = map read s :: [Integer],
-        let dns = zipWith (-) (tail sns) sns,
-        and $ zipWith (==) dns (tail dns),
-        all isPrime sns]
+        e <- M.elems $ M.fromListWith (flip (++)) [(sort $ show p, [p]) | p <- range 1000 9999 primes],
+        length e >= 3,
+        s <- listChoose' 3 e,
+        isArithmetic s]
 
-listChoose' n k l = map (map (l !!)) $ map elems $ catMaybes $ takeWhile isJust $ iterate f (Just $ lc)
+isArithmetic l = all (== d) ds
     where
+    (d:ds) = zipWith (-) (tail l) l
+
+listChoose' k l = map (map (l !!)) $ map elems $ catMaybes $ takeWhile isJust $ iterate f (Just $ lc)
+    where
+    n = length l
     lc = listChoose n k [0..n - 1]
     f (Just l) = next l
     f Nothing = Nothing
+
+range a b = takeWhile (<= b) . dropWhile (< a)
