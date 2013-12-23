@@ -1,35 +1,30 @@
-import Data.Function
-import Data.List
-import Data.Maybe
+main = print $ head solutions
 
-main = print $ fromJust $ find t12 pathy
-
-t1 = (\(pj, pk, d) -> isPentagonal (pj + pk))
-t2 = (\(pj, pk, d) -> isPentagonal d)
-t12 = (\(pj, pk, d) -> isPentagonal d && isPentagonal (pj + pk))
-
-pathy = mergeNBy (compare `on` (\(pj, pk, d) -> d)) [[(pj, pk, d) | k <- [j + 1..], let (pj, pk) = (pentagon j, pentagon k), let d = abs (pk - pj)] | j <- [1..]]
-
-pentagon n = n * (3 * n - 1) `div` 2
-
-pentagons = map pentagon [1..]
+-- Try all pairs (d, o) where o <= d because if o > d then j < 0.
+-- Pk, Pj, and Ps can be determined for a given (d, o).
+-- Pk = P(j+o)
+-- Pd = Pk - Pj = P(j+o) - Pj = ... = 3jo + Po
+-- j = (Pd - Po) / 3o
+-- Ps = 2Pj + Pd
+solutions =
+    [pd |
+        (d, pd) <- zip [1..] pentagons,
+        (o, po) <- zip [1..d - 1] pentagons,
+        let (j, r) =  (pd - po) `divMod` (3 * o),
+        r == 0,
+        isPentagonal (2 * pentagon j + pd)]
 
 -- Pn = n(3n-1)/2
 -- 3n^2 - n - 2Pn = 0
 -- n = (1 + sqrt (1 + 24Pn)) / 6
-isPentagonal pn = isSquare d && (1 + sqrt' d) `mod` 6 == 0
+isPentagonal pn = isSquare d && (1 + sqrti d) `mod` 6 == 0
     where
     d = 1 + 24 * pn
 
-isSquare x = (sqrt' x)^2 == x
+isSquare x = (sqrti x)^2 == x
 
-sqrt' = floor . sqrt . fromIntegral 
+sqrti = floor . sqrt . fromIntegral 
 
-merge2By cmp a [] = a
-merge2By cmp [] b = b
-merge2By cmp (a:as) (b:bs)
-    | cmp a b == GT = b : merge2By cmp (a:as) bs
-    | otherwise = a : merge2By cmp as (b:bs)
+pentagon n = n * (3 * n - 1) `div` 2
 
-mergeNBy cmp [] = []
-mergeNBy cmp (l:ls) = head l : merge2By cmp (tail l) (mergeNBy cmp ls)
+pentagons = map pentagon [1..]
