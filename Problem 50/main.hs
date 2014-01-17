@@ -1,20 +1,13 @@
 import Data.Numbers.Primes
 import Data.List
-import Data.Function
-import Data.Maybe
-import qualified Data.Sequence as Seq
-import qualified Data.Foldable as Foldable
 
-main = print $ maxConsecutives 1000000
+main = print $ head $ solutions 1000000
 
-upper n = length $ takeWhile (<= n) $ scanl1 (+) primes
-
-maxConsecutives limit = head $ filter isPrime $ concatMap (gen n) $ reverse [1 .. upper n]
+solutions lim = filter isPrime $ concatMap (sums maxPrime) $ reverse [1 .. maxSumLen maxPrime]
     where
-    n = last $ takeWhile (<= limit) primes
+    maxPrime = head $ filter isPrime [lim, lim - 1 .. 2]
+    maxSumLen p = length $ takeWhile (<= p) cumPrimes
 
-gen n i = takeWhile (<= n) $ gen' (Seq.fromList $ take i primes) (drop i primes)
+sums lim len = takeWhile (<= lim) $ zipWith (-) (drop len cumPrimes) cumPrimes
 
-gen' line ps = Foldable.sum line : gen' (shift line (head ps)) (tail ps)
-
-shift s a = Seq.drop 1 $ s Seq.|> a
+cumPrimes = scanl1 (+) primes
