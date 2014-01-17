@@ -5,13 +5,14 @@ import Data.Maybe
 import qualified Data.Sequence as Seq
 import qualified Data.Foldable as Foldable
 
-main = print $ fst $ maximumBy (compare `on` snd) $ map (\p -> (p, maxConsecutives' p)) $ takeWhile (< (1000000 :: Integer)) primes
+main = print $ maxConsecutives 1000000
 
-maxConsecutives' n = maximum $ (:) 0 $ map length $ go n 0 Seq.empty primes
+upper n = length $ takeWhile (<= n) $ scanl1 (+) primes
 
--- repeatedly drop the head and append the next prime to the tail, depending on the sum
-go n s acc ps
-    | head ps > n = []
-    | s == n = Foldable.toList acc : go n (s + head ps) (acc Seq.|> (head ps)) (tail ps)
-    | s <  n =                       go n (s + head ps) (acc Seq.|> (head ps)) (tail ps)
-    | otherwise =                    go n (s - Seq.index acc 0) (Seq.drop 1 acc) ps
+maxConsecutives n = head $ filter isPrime $ concatMap (takeWhile (<= n') . gen) [upper n', upper n' - 1 .. 1]
+    where
+    n' = last $ takeWhile (<= n) primes
+
+gen n = gen' (Seq.fromList $ take n primes) (drop n primes)
+
+gen' line ps = Foldable.sum line : gen' (Seq.drop 1 $ line Seq.|> head ps) (tail ps)
