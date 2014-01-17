@@ -15,7 +15,7 @@ maxConsecutives' n = maximum $ (:) 0 $ map length $ go n (sum terp1) (Seq.fromLi
 
 -- repeatedly drop the head and append the next prime to the tail, depending on the sum
 go n s acc ps
-    | Seq.length acc == 0 = []
+    | head ps > n = []
     | s == n = Foldable.toList acc : go n (s + head ps) (acc Seq.|> (head ps)) (tail ps)
     | s <  n =                       go n (s + head ps) (acc Seq.|> (head ps)) (tail ps)
     | otherwise =                    go n (s - Seq.index acc 0) (Seq.drop 1 acc) ps
