@@ -15,7 +15,7 @@ slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagona
 
 stagger p = zipWith (++) (triangularList p)
 
-triangularList p = iterate (p :) []
+triangularList = inits . repeat
 
 map2D = map . map
 
