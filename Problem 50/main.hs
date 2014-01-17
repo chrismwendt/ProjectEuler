@@ -7,11 +7,7 @@ import qualified Data.Foldable as Foldable
 
 main = print $ fst $ maximumBy (compare `on` snd) $ map (\p -> (p, maxConsecutives' p)) $ takeWhile (< (1000000 :: Integer)) primes
 
-upper n = length $ takeWhile (<= n) $ scanl1 (+) primes
-
-maxConsecutives' n = maximum $ (:) 0 $ map length $ go n (sum terp1) (Seq.fromList terp1) terp2
-    where
-    (terp1, terp2) = splitAt (upper n) primes
+maxConsecutives' n = maximum $ (:) 0 $ map length $ go n 0 Seq.empty primes
 
 -- repeatedly drop the head and append the next prime to the tail, depending on the sum
 go n s acc ps
