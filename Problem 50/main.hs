@@ -9,7 +9,7 @@ main = print $ maxConsecutives 1000000
 
 upper n = length $ takeWhile (<= n) $ scanl1 (+) primes
 
-maxConsecutives n = head $ filter isPrime $ concatMap (takeWhile (<= n') . gen) [upper n', upper n' - 1 .. 1]
+maxConsecutives n = head $ filter isPrime $ concatMap (takeWhile (<= n') . gen) $ reverse [1 .. upper n']
     where
     n' = last $ takeWhile (<= n) primes
 
