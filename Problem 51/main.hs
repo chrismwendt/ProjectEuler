@@ -3,17 +3,26 @@ import Data.Maybe
 import Data.List
 import Data.Function
 
-main = print $ fromJust $ find ((8 ==) . length . longestPrimeFamily) primes
+main = print $ head $ solutions 8
 
-longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ families p
+solutions n = map (\(mask, f) -> head (maskedPrimes mask)) $
+    filter (\(mask, f) -> genericLength f == n && not (null $ maskedPrimes mask)) primeFamilies
 
-families :: Integer -> [[Integer]]
-families p = map (map read) $ map (family $ show p) (masks $ length $ show p)
+maskedPrimes mask = filter isPrime $ map read $ filter noLeadingZero $ sequence [if c == '*' then ['0'..'9'] else [c] | c <- mask]
 
-family p m = filter (not . isPrefixOf "0") $ map (replace (apply m p) '*') ['0'..'9']
+primeFamilies = map (\f -> (fst f, filter isPrime $ snd f)) families
 
-masks n = filter (replicate n ' ' /=) $ sequence (replicate n "* ")
+families = map family language
+    where
+    family s = (s, family' s)
+    family' s = map read $ filter noLeadingZero $ map (replace s '*') ['0'..'9']
 
-apply mask s = [if l == '*' then '*' else r | (l, r) <- zip mask s]
+language = filter noLeadingZero language'
+    where
+    language' = concatMap stringsN [1..]
+    stringsN n = filter (elem '*') (stringsN' n)
+    stringsN' n = sequence (replicate n ('*' : ['0'..'9']))
 
 replace s o n = [if c == o then n else c | c <- s]
+
+noLeadingZero = not . isPrefixOf "0"
