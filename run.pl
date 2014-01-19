@@ -5,7 +5,7 @@ my ($problem, $language) = @ARGV;
 print "Running problem $problem in $language...\n";
 
 my $cwd = getcwd;
-chdir("Problem\ $problem") or die "$!";
+chdir "Problem\ $problem" or die "$!";
 
 if ($language eq 'java') {
     print `javac main.java`;
@@ -19,4 +19,4 @@ if ($language eq 'java') {
     print `rm main.o main.hi main`;
 }
 
-chdir($cwd) or die "$!";
+chdir $cwd or die "$!";
