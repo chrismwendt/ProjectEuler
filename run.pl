@@ -1,9 +1,10 @@
+use Cwd;
+
 my ($problem, $language) = @ARGV;
 
 print "Running problem $problem in $language...\n";
 
-my $cwd = `pwd`;
-chomp $cwd;
+my $cwd = getcwd;
 chdir("Problem\ $problem") or die "$!";
 
 if ($language eq 'java') {
