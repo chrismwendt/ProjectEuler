@@ -10,7 +10,7 @@ longestPrimeFamily :: Integer -> [Integer]
 longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ map (map read) $ families (show p)
 
 families :: String -> [[String]]
-families string = map (family $ show string) (masks string)
+families string = map (family string) (masks string)
 
 family :: String -> String -> [String]
 family n mask = filter (not . isPrefixOf "0") $ map (replace mask '*') ['0'..'9']
