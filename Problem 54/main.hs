@@ -101,9 +101,9 @@ handRank cards
     derp = sortBy (compare `on` length) terp
     ranks = map rank cards
     suits = map suit cards
-    isStraight = allPairs (\(Card { rank=l }) (Card { rank=r }) -> (r /= (minBound :: Rank)) && l == pred r)
+    isStraight = allPairs (\(Card { rank=l }) (Card { rank=r }) -> (r /= (minBound :: Rank)) && l == pred r) (sort $ cards)
     isFlush = length (nub suits) == 1
-    allPairs f = and $ zipWith f cards (tail cards)
+    allPairs f c = and $ zipWith f c (tail c)
 
 
 compareHands :: Cards -> Cards -> Ordering
