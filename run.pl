@@ -1,5 +1,4 @@
 use Cwd;
-use Data::Dumper;
 
 my $presets = {
     java => {
