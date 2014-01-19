@@ -3,17 +3,17 @@ use Data::Dumper;
 
 my $presets = {
     java => {
-        setup => sub { print `javac main.java`; },
-        run => sub { print `java main`; },
-        teardown => sub { print `rm main.class`; }
+        setup => sub { `javac main.java`; },
+        run => sub { `java main`; },
+        teardown => sub { `rm main.class`; }
     }, haskell => {
         setup => sub { },
-        run => sub { print `runhaskell main.hs`; },
+        run => sub { `runhaskell main.hs`; },
         teardown => sub { }
     }, ghc => {
-        setup => sub { print `ghc -O2 main.hs`; },
-        run => sub { print `runhaskell main.hs`; },
-        teardown => sub { print `rm main.o main.hi main`; }
+        setup => sub { `ghc -O2 main.hs`; },
+        run => sub { `runhaskell main.hs`; },
+        teardown => sub { `rm main.o main.hi main`; }
     }
 };
 
