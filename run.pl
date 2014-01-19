@@ -3,15 +3,15 @@ use Cwd;
 my $presets = {
     java => {
         setup => sub { `javac main.java`; },
-        run => sub { `java main`; },
+        run => sub { print `java main`; },
         teardown => sub { `rm main.class`; }
     }, haskell => {
         setup => sub { },
-        run => sub { `runhaskell main.hs`; },
+        run => sub { print `runhaskell main.hs`; },
         teardown => sub { }
     }, ghc => {
         setup => sub { `ghc -O2 main.hs`; },
-        run => sub { `runhaskell main.hs`; },
+        run => sub { print `runhaskell main.hs`; },
         teardown => sub { `rm main.o main.hi main`; }
     }
 };
