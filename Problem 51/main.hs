@@ -4,7 +4,7 @@ import Data.List
 import Data.Function
 
 main :: IO ()
-main = print $ minimum $ fromJust $ find ((8 ==) . length) $ map longestPrimeFamily primes
+main = print $ minimum $ fromJust $ find (\f -> length f == 8) $ map longestPrimeFamily primes
 
 longestPrimeFamily :: Integer -> [Integer]
 longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ families p
