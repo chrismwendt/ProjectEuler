@@ -12,7 +12,7 @@ my $presets = {
         teardown => sub { }
     }, ghc => {
         setup => sub { `ghc -O2 main.hs`; },
-        run => sub { print `runhaskell main.hs`; },
+        run => sub { print `./main`; },
         teardown => sub { `rm main.o main.hi main`; }
     }
 };
