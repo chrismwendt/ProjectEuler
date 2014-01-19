@@ -1,4 +1,5 @@
 use Cwd;
+use Time::HiRes qw(gettimeofday tv_interval);
 
 my $presets = {
     java => {
@@ -19,7 +20,9 @@ my $presets = {
 sub run {
     my ($steps) = @_;
     $steps->{setup}->();
+    my $t = [gettimeofday];
     $steps->{run}->();
+    print tv_interval($t) . " seconds";
     $steps->{teardown}->();
 }
 
