@@ -16,9 +16,7 @@ family :: String -> String -> [String]
 family p m = filter (not . isPrefixOf "0") $ map (replace m '*') ['0'..'9']
 
 masks :: String -> [String]
-masks s = map f $ nub s
-    where
-    f i = [if c == i then '*' else c | c <- s]
+masks s = map (\i -> [if c == i then '*' else c | c <- s]) $ nub s
 
 replace :: String -> Char -> Char -> String
 replace s o n = [if c == o then n else c | c <- s]
