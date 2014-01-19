@@ -24,12 +24,16 @@ sub run {
     $steps->{teardown}->();
 }
 
-my ($problem, $language) = @ARGV;
+sub main {
+    my ($problem, $language) = @ARGV;
 
-print "Running problem $problem in $language...\n";
+    print "Running problem $problem in $language...\n";
 
-my $cwd = getcwd;
-chdir "Problem\ $problem" or die "$!";
-run($presets->{$language});
+    my $cwd = getcwd;
+    chdir "Problem\ $problem" or die "$!";
+    run($presets->{$language});
 
-chdir $cwd or die "$!";
+    chdir $cwd or die "$!";
+}
+
+main();
