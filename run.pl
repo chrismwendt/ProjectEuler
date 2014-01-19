@@ -1,4 +1,28 @@
 use Cwd;
+use Data::Dumper;
+
+my $presets = {
+    java => {
+        setup => sub { print `javac main.java`; },
+        run => sub { print `java main`; },
+        teardown => sub { print `rm main.class`; }
+    }, haskell => {
+        setup => sub { },
+        run => sub { print `runhaskell main.hs`; },
+        teardown => sub { }
+    }, ghc => {
+        setup => sub { print `ghc -O2 main.hs`; },
+        run => sub { print `runhaskell main.hs`; },
+        teardown => sub { print `rm main.o main.hi main`; }
+    }
+};
+
+sub run {
+    my ($steps) = @_;
+    $steps->{setup}->();
+    $steps->{run}->();
+    $steps->{teardown}->();
+}
 
 my ($problem, $language) = @ARGV;
 
@@ -6,17 +30,6 @@ print "Running problem $problem in $language...\n";
 
 my $cwd = getcwd;
 chdir "Problem\ $problem" or die "$!";
-
-if ($language eq 'java') {
-    print `javac main.java`;
-    print `java main`;
-    print `rm main.class`;
-} elsif ($language eq 'haskell') {
-    print `runhaskell main.hs`;
-} elsif ($language eq 'ghc') {
-    print `ghc -O2 main.hs`;
-    print `./main`;
-    print `rm main.o main.hi main`;
-}
+run($presets->{$language});
 
 chdir $cwd or die "$!";
