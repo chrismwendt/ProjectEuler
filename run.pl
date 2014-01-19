@@ -22,7 +22,7 @@ sub run {
     $steps->{setup}->();
     my $t = [gettimeofday];
     $steps->{run}->();
-    print tv_interval($t) . " seconds";
+    print tv_interval($t) . " seconds\n";
     $steps->{teardown}->();
 }
 
