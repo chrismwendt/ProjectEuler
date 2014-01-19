@@ -7,10 +7,10 @@ main :: IO ()
 main = print $ minimum $ fromJust $ find (\f -> length f == 8) $ map longestPrimeFamily primes
 
 longestPrimeFamily :: Integer -> [Integer]
-longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ families p
+longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ map (map read) $ families (show p)
 
-families :: Integer -> [[Integer]]
-families p = map (map read . family (show p)) (masks $ show p)
+families :: String -> [[String]]
+families p = map (family $ show p) (masks p)
 
 family :: String -> String -> [String]
 family p m = filter (not . isPrefixOf "0") $ map (replace m '*') ['0'..'9']
