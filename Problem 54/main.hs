@@ -86,16 +86,16 @@ data HandRank =
 
 handRank :: Cards -> HandRank
 handRank cards
-    | sort ranks == [Ten .. Ace] && isFlush = RoyalFlush (sort cards)
-    | isStraight && isFlush = StraightFlush (sort cards)
+    | sort ranks == [Ten .. Ace] && isFlush = RoyalFlush (reverse $ sort cards)
+    | isStraight && isFlush = StraightFlush (reverse $ sort cards)
     | map length derp == [1, 4] = FourOfAKind (derp !! 1) (derp !! 0)
     | map length derp == [2, 3] = FullHouse (derp !! 1) (derp !! 0)
-    | isFlush = Flush cards
-    | isStraight = Straight cards
-    | map length derp == [1, 1, 3] = ThreeOfAKind (derp !! 2) ((derp !! 0) ++ (derp !! 1))
-    | map length derp == [1, 2, 2] = TwoPairs (derp !! 2) (derp !! 1) (derp !! 0)
-    | map length derp == [1, 1, 1, 2] = OnePair (derp !! 3) ((derp !! 0) ++ (derp !! 1) ++ (derp !! 2))
-    | otherwise = HighCards cards
+    | isFlush = Flush (reverse $ sort cards)
+    | isStraight = Straight (reverse $ sort cards)
+    | map length derp == [1, 1, 3] = ThreeOfAKind (derp !! 2) (reverse $ sort $ (derp !! 0) ++ (derp !! 1))
+    | map length derp == [1, 2, 2] = TwoPairs (if derp !! 1 < derp !! 2 then (derp !! 2) else (derp !! 1)) (if derp !! 1 < derp !! 2 then (derp !! 1) else (derp !! 2)) (derp !! 0)
+    | map length derp == [1, 1, 1, 2] = OnePair (derp !! 3) (reverse $ sort $ (derp !! 0) ++ (derp !! 1) ++ (derp !! 2))
+    | otherwise = HighCards $ reverse $ sort cards
     where
     terp = groupWith rank cards
     derp = sortBy (compare `on` length) terp
