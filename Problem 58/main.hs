@@ -4,9 +4,11 @@ import Data.Ratio
 import Data.Maybe
 
 main :: IO ()
-main = print $ (\(a, b, ((l, s):ls)) -> s - 1) $ fromJust $ find condition $ dropWhile (\(a, b, c) -> a == 0 || b == 0) $ iterate step (0, 0, rings)
+main = print $ (\(a, b, ((l, s):ls)) -> s - 1) $ fromJust $ find condition $ iterate step (0, 0, rings)
 
-condition (np, nc, l) = fromInteger np / fromInteger (np + nc) < 0.1
+condition (np, nc, l)
+    | np == 0 || nc == 0 = False
+    | otherwise = fromInteger np / fromInteger (np + nc) < 0.1
 
 step :: (Integer, Integer, [([Integer], Integer)]) -> (Integer, Integer, [([Integer], Integer)])
 step (np, nc, ((l, s):ls)) = (np + genericLength np', nc + genericLength nc', ls)
