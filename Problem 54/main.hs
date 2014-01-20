@@ -79,16 +79,16 @@ data HandRank =
 
 handRank :: Cards -> HandRank
 handRank cards
-    | sRanks == [Ace, King .. Ten] && isFlush = RoyalFlush    (concat rankGroups)
-    | isStraight && isFlush                   = StraightFlush (concat rankGroups)
+    | sRanks == [Ace, King .. Ten] && isFlush = RoyalFlush    (reverse $ sort cards)
+    | isStraight && isFlush                   = StraightFlush (reverse $ sort cards)
     | rankCounts == [4, 1]                    = FourOfAKind   (concat rankGroups)
     | rankCounts == [3, 2]                    = FullHouse     (concat rankGroups)
     | isFlush                                 = Flush         (reverse $ sort cards)
-    | isStraight                              = Straight      (concat rankGroups)
+    | isStraight                              = Straight      (reverse $ sort cards)
     | rankCounts == [3, 1, 1]                 = ThreeOfAKind  (concat rankGroups)
     | rankCounts == [2, 2, 1]                 = TwoPairs      (concat rankGroups)
     | rankCounts == [2, 1, 1, 1]              = OnePair       (concat rankGroups)
-    | otherwise                               = HighCards     (concat rankGroups)
+    | otherwise                               = HighCards     (reverse $ sort cards)
     where
     sRanks = sort $ map rank cards
     rankGroups = reverse $ sortBy (compare `on` length) $ groupWith rank cards
