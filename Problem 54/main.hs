@@ -13,46 +13,46 @@ data Rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack 
     deriving (Eq, Ord, Enum, Bounded)
 
 instance Show Rank where
-    show r = [fromJust $ lookup r rankToChar]
+    show r = fromJust $ lookup r rankToString
 
 instance Read Rank where
-    readPrec = choice $ strValMap $ map (\(c, r) -> ([c], r)) charToRank
+    readPrec = choice $ strValMap stringToRank
 
 data Suit = Spade | Club | Diamond | Heart
     deriving (Eq, Ord, Enum)
 
 instance Show Suit where
-    show s = [fromJust $ lookup s suitToChar]
+    show s = fromJust $ lookup s suitToString
 
 instance Read Suit where
-    readPrec = choice $ strValMap $ map (\(c, s) -> ([c], s)) charToSuit
+    readPrec = choice $ strValMap stringToSuit
 
-charToRank =
-    [ ('2', Two)
-    , ('3', Three)
-    , ('4', Four)
-    , ('5', Five)
-    , ('6', Six)
-    , ('7', Seven)
-    , ('8', Eight)
-    , ('9', Nine)
-    , ('T', Ten)
-    , ('J', Jack)
-    , ('Q', Queen)
-    , ('K', King)
-    , ('A', Ace)
+stringToRank =
+    [ ("2", Two)
+    , ("3", Three)
+    , ("4", Four)
+    , ("5", Five)
+    , ("6", Six)
+    , ("7", Seven)
+    , ("8", Eight)
+    , ("9", Nine)
+    , ("T", Ten)
+    , ("J", Jack)
+    , ("Q", Queen)
+    , ("K", King)
+    , ("A", Ace)
     ]
 
-charToSuit =
-    [ ('H', Heart)
-    , ('D', Diamond)
-    , ('C', Club)
-    , ('S', Spade)
+stringToSuit =
+    [ ("H", Heart)
+    , ("D", Diamond)
+    , ("C", Club)
+    , ("S", Spade)
     ]
 
-rankToChar = map swap charToRank
+rankToString = map swap stringToRank
 
-suitToChar = map swap charToSuit
+suitToString = map swap stringToSuit
 
 data Card = Card { rank :: Rank, suit :: Suit }
     deriving (Eq)
@@ -61,7 +61,7 @@ instance Ord Card where
     compare (Card l _) (Card r _) = compare l r
 
 instance Show Card where
-    show (Card { rank=r, suit=s }) = [fromJust (lookup r rankToChar), fromJust (lookup s suitToChar)]
+    show (Card { rank=r, suit=s }) = fromJust (lookup r rankToString) ++ fromJust (lookup s suitToString)
 
 type Cards = [Card]
 
