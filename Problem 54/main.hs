@@ -5,6 +5,7 @@ import GHC.Exts
 import Text.Read
 import Text.ParserCombinators.ReadP hiding (choice)
 import Text.ParserCombinators.ReadPrec hiding (choice)
+import Data.Tuple
 
 strValMap = map (\(x, y) -> lift $ string x >> return y)
 
@@ -49,9 +50,9 @@ charToSuit =
     , ('S', Spade)
     ]
 
-rankToChar = map (\(c, r) -> (r, c)) charToRank
+rankToChar = map swap charToRank
 
-suitToChar = map (\(c, s) -> (s, c)) charToSuit
+suitToChar = map swap charToSuit
 
 data Card = Card { rank :: Rank, suit :: Suit }
     deriving (Eq)
