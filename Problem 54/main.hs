@@ -11,6 +11,15 @@ main = do
     text <- readFile "poker.txt"
     print $ length $ filter ("Player 1" ==) $ map winner $ lines text
 
+winner :: String -> String
+winner s = case winner' s of
+    LT -> "Player 2"
+    EQ -> "Draw"
+    GT -> "Player 1"
+    where
+    winner' s = compare (handRank $ take 5 cards) (handRank $ drop 5 cards)
+    cards = map readCard $ words s
+
 strValMap :: [(String, a)] -> [ReadPrec a]
 strValMap = map (\(x, y) -> lift $ string x >> return y)
 
@@ -95,12 +104,3 @@ handRank cards
     rankCounts = map length rankGroups
     isStraight = sRanks == [head sRanks .. last sRanks]
     isFlush = length (nub $ map suit cards) == 1
-
-winner :: String -> String
-winner s = case winner' s of
-    LT -> "Player 2"
-    EQ -> "Draw"
-    GT -> "Player 1"
-    where
-    winner' s = compare (handRank $ take 5 cards) (handRank $ drop 5 cards)
-    cards = map readCard $ words s
