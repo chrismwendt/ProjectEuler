@@ -104,7 +104,7 @@ compareHands l r = compare (handRank l) (handRank r)
 winner :: String -> String
 winner s = case winner' s of
     LT -> "Player 2"
-    EQ -> "?"
+    EQ -> "Draw"
     GT -> "Player 1"
     where
     winner' s = compare (handRank $ take 5 cards) (handRank $ drop 5 cards)
