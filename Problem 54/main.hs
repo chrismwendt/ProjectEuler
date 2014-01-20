@@ -56,6 +56,7 @@ instance Ord Card where
 instance Show Card where
     show (Card { rank=r, suit=s }) = fromJust (lookup r rankToString) ++ fromJust (lookup s suitToString)
 
+-- TODO make Card an instance of Read
 readCard :: String -> Card
 readCard s = Card (read (take 1 s) :: Rank) (read (take 1 $ drop 1 s) :: Suit)
 
