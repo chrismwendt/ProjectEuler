@@ -2,7 +2,6 @@ import Data.List
 import Data.Maybe
 import Data.Function
 import GHC.Exts
-import qualified Data.Map as M
 import Text.Read
 import Text.ParserCombinators.ReadP hiding (choice)
 import Text.ParserCombinators.ReadPrec hiding (choice)
@@ -13,21 +12,21 @@ data Rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack 
     deriving (Eq, Ord, Enum, Bounded)
 
 instance Show Rank where
-    show r = [fromJust (M.lookup r rankToChar)]
+    show r = [fromJust $ lookup r rankToChar]
 
 instance Read Rank where
-    readPrec = choice $ strValMap $ map (\(c, r) -> ([c], r)) $ M.toList charToRank
+    readPrec = choice $ strValMap $ map (\(c, r) -> ([c], r)) charToRank
 
 data Suit = Spade | Club | Diamond | Heart
     deriving (Eq, Ord, Enum)
 
 instance Show Suit where
-    show s = [fromJust (M.lookup s suitToChar)]
+    show s = [fromJust $ lookup s suitToChar]
 
 instance Read Suit where
-    readPrec = choice $ strValMap $ map (\(c, s) -> ([c], s)) $ M.toList charToSuit
+    readPrec = choice $ strValMap $ map (\(c, s) -> ([c], s)) charToSuit
 
-charToRank = M.fromList
+charToRank =
     [ ('2', Two)
     , ('3', Three)
     , ('4', Four)
@@ -43,16 +42,16 @@ charToRank = M.fromList
     , ('A', Ace)
     ]
 
-charToSuit = M.fromList
+charToSuit =
     [ ('H', Heart)
     , ('D', Diamond)
     , ('C', Club)
     , ('S', Spade)
     ]
 
-rankToChar = M.fromList $ map (\(c, r) -> (r, c)) $ M.toList charToRank
+rankToChar = map (\(c, r) -> (r, c)) charToRank
 
-suitToChar = M.fromList $ map (\(c, s) -> (s, c)) $ M.toList charToSuit
+suitToChar = map (\(c, s) -> (s, c)) charToSuit
 
 data Card = Card { rank :: Rank, suit :: Suit }
     deriving (Eq)
@@ -61,7 +60,7 @@ instance Ord Card where
     compare (Card l _) (Card r _) = compare l r
 
 instance Show Card where
-    show (Card { rank=r, suit=s }) = [fromJust (M.lookup r rankToChar), fromJust (M.lookup s suitToChar)]
+    show (Card { rank=r, suit=s }) = [fromJust (lookup r rankToChar), fromJust (lookup s suitToChar)]
 
 type Cards = [Card]
 
