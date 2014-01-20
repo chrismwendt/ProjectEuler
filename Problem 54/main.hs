@@ -79,24 +79,25 @@ data HandRank =
 
 handRank :: Cards -> HandRank
 handRank cards
-    | ranks == [Ten .. Ace] && isFlush  =  RoyalFlush    ordered
-    | isStraight && isFlush             =  StraightFlush ordered
-    | rankCounts == [4, 1]              =  FourOfAKind   ordered
-    | rankCounts == [3, 2]              =  FullHouse     ordered
-    | isFlush                           =  Flush         (reverse $ sort cards)
-    | isStraight                        =  Straight      ordered
-    | rankCounts == [3, 1, 1]           =  ThreeOfAKind  ordered
-    | rankCounts == [2, 2, 1]           =  TwoPairs      ordered
-    | rankCounts == [2, 1, 1, 1]        =  OnePair       ordered
-    | otherwise                         =  HighCards     ordered
+    | ranks == [Ace, King .. Ten] && isFlush = RoyalFlush    ordered
+    | isStraight && isFlush                  = StraightFlush ordered
+    | rankCounts == [4, 1]                   = FourOfAKind   ordered
+    | rankCounts == [3, 2]                   = FullHouse     ordered
+    | isFlush                                = Flush         dCards
+    | isStraight                             = Straight      ordered
+    | rankCounts == [3, 1, 1]                = ThreeOfAKind  ordered
+    | rankCounts == [2, 2, 1]                = TwoPairs      ordered
+    | rankCounts == [2, 1, 1, 1]             = OnePair       ordered
+    | otherwise                              = HighCards     ordered
     where
-    ranks = sort $ map rank cards
-    rankGroups = reverse $ sortBy (compare `on` length) $ sort $ groupWith rank cards
+    dCards = reverse $ sort cards
+    ranks = map rank dCards
+    rankGroups = reverse $ sortBy (compare `on` length) $ groupWith rank dCards
     ordered = concat rankGroups
     rankCounts = map length rankGroups
     allPairs f c = and $ zipWith f c (tail c)
-    isStraight = nub rankCounts == [1] && ranks == [head ranks .. last ranks]
-    isFlush = length (nub $ map suit cards) == 1
+    isStraight = nub rankCounts == [1] && ranks == [head ranks, pred (head ranks) .. last ranks]
+    isFlush = length (nub $ map suit dCards) == 1
 
 compareHands :: Cards -> Cards -> Ordering
 compareHands l r = compare (handRank l) (handRank r)
