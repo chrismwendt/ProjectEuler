@@ -7,8 +7,13 @@ import Text.ParserCombinators.ReadP hiding (choice)
 import Text.ParserCombinators.ReadPrec hiding (choice)
 import Data.Tuple
 
+main = do
+    text <- readFile "poker.txt"
+    print $ length $ filter ("Player 1" ==) $ map winner $ lines text
+
 strValMap = map (\(x, y) -> lift $ string x >> return y)
 
+-- Rank
 data Rank = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
     deriving (Eq, Ord, Enum, Bounded)
 
@@ -18,6 +23,11 @@ instance Show Rank where
 instance Read Rank where
     readPrec = choice $ strValMap stringToRank
 
+stringToRank = zip (words "2 3 4 5 6 7 8 9 T J Q K A") [Two .. Ace]
+
+rankToString = map swap stringToRank
+
+-- Suit
 data Suit = Club | Diamond | Heart | Spade
     deriving (Eq, Ord, Enum)
 
@@ -27,14 +37,11 @@ instance Show Suit where
 instance Read Suit where
     readPrec = choice $ strValMap stringToSuit
 
-stringToRank = zip (words "2 3 4 5 6 7 8 9 T J Q K A") [Two .. Ace]
-
 stringToSuit = zip (words "C D H S") [Club .. Spade]
-
-rankToString = map swap stringToRank
 
 suitToString = map swap stringToSuit
 
+-- Card
 data Card = Card { rank :: Rank, suit :: Suit }
     deriving (Eq)
 
@@ -44,6 +51,10 @@ instance Ord Card where
 instance Show Card where
     show (Card { rank=r, suit=s }) = fromJust (lookup r rankToString) ++ fromJust (lookup s suitToString)
 
+readCard :: String -> Card
+readCard s = Card (read (take 1 s) :: Rank) (read (take 1 $ drop 1 s) :: Suit)
+
+-- Convenience
 type Cards = [Card]
 
 type Pair = Cards
@@ -52,6 +63,7 @@ type Triplet = Cards
 
 type Quadruplet = Cards
 
+-- Hand rank
 data HandRank =
       HighCards Cards
     | OnePair Pair Cards
@@ -86,21 +98,14 @@ handRank cards
     isFlush = length (nub suits) == 1
     allPairs f c = and $ zipWith f c (tail c)
 
-
 compareHands :: Cards -> Cards -> Ordering
 compareHands l r = compare (handRank l) (handRank r)
 
-readCard :: String -> Card
-readCard s = Card (read (take 1 s) :: Rank) (read (take 1 $ drop 1 s) :: Suit)
-
-cerp :: String -> String
-cerp s = case cerp' s of
+winner :: String -> String
+winner s = case winner' s of
     LT -> "Player 2"
     EQ -> "?"
     GT -> "Player 1"
     where
-    cerp' s = compare (handRank $ take 5 $ map readCard $ words s) (handRank $ drop 5 $ map readCard $ words s)
-
-main = do
-    text <- readFile "poker.txt"
-    print $ length $ filter ("Player 1" ==) $ map cerp $ lines text
+    winner' s = compare (handRank $ take 5 cards) (handRank $ drop 5 cards)
+    cards = map readCard $ words s
