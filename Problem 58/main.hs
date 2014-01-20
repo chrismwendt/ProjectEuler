@@ -19,4 +19,4 @@ rings = iterate step ([1], 0)
     step = (\(l, s) -> (corners (last l) (s + 2), s + 2))
 
 corners :: Integer -> Integer -> [Integer]
-corners n l = map (\i -> n + i*l) [1..4]
+corners n l = [n + i*l | i <- [1..4]]
