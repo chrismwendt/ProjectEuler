@@ -96,9 +96,6 @@ handRank cards
     isStraight = sRanks == [head sRanks .. last sRanks]
     isFlush = length (nub $ map suit cards) == 1
 
-compareHands :: Cards -> Cards -> Ordering
-compareHands l r = compare (handRank l) (handRank r)
-
 winner :: String -> String
 winner s = case winner' s of
     LT -> "Player 2"
