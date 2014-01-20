@@ -79,24 +79,24 @@ data HandRank =
 
 handRank :: Cards -> HandRank
 handRank cards
-    | sort ranks == [Ten .. Ace] && isFlush  =  RoyalFlush (reverse $ sort cards)
-    | isStraight && isFlush                  =  StraightFlush (reverse $ sort cards)
-    | map length derp == [1, 4]              =  FourOfAKind (derp !! 1) (derp !! 0)
-    | map length derp == [2, 3]              =  FullHouse (derp !! 1) (derp !! 0)
-    | isFlush                                =  Flush (reverse $ sort cards)
-    | isStraight                             =  Straight (reverse $ sort cards)
-    | map length derp == [1, 1, 3]           =  ThreeOfAKind (derp !! 2) (reverse $ sort $ (derp !! 0) ++ (derp !! 1))
-    | map length derp == [1, 2, 2]           =  TwoPairs (if derp !! 1 < derp !! 2 then (derp !! 2) else (derp !! 1)) (if derp !! 1 < derp !! 2 then (derp !! 1) else (derp !! 2)) (derp !! 0)
-    | map length derp == [1, 1, 1, 2]        =  OnePair (derp !! 3) (reverse $ sort $ (derp !! 0) ++ (derp !! 1) ++ (derp !! 2))
-    | otherwise                              =  HighCards $ reverse $ sort cards
+    | ranks == [Ten .. Ace] && isFlush  =  RoyalFlush $ rsort cards
+    | isStraight && isFlush             =  StraightFlush $ rsort cards
+    | rankCounts == [1, 4]              =  FourOfAKind (rankGroups !! 1) (rankGroups !! 0)
+    | rankCounts == [2, 3]              =  FullHouse (rankGroups !! 1) (rankGroups !! 0)
+    | isFlush                           =  Flush $ rsort cards
+    | isStraight                        =  Straight $ rsort cards
+    | rankCounts == [1, 1, 3]           =  ThreeOfAKind (rankGroups !! 2) (take 2 $ concat rankGroups)
+    | rankCounts == [1, 2, 2]           =  TwoPairs (rankGroups !! 2) (rankGroups !! 1) (rankGroups !! 0)
+    | rankCounts == [1, 1, 1, 2]        =  OnePair (rankGroups !! 3) (take 3 $ concat rankGroups)
+    | otherwise                         =  HighCards $ rsort cards
     where
-    terp = groupWith rank cards
-    derp = sortBy (compare `on` length) terp
-    ranks = map rank cards
-    suits = map suit cards
-    isStraight = allPairs (\(Card { rank=l }) (Card { rank=r }) -> (r /= (minBound :: Rank)) && l == pred r) (sort $ cards)
-    isFlush = length (nub suits) == 1
+    ranks = sort $ map rank cards
+    rankGroups = sortBy (compare `on` length) $ reverse $ sort $ groupWith rank cards
+    rankCounts = map length rankGroups
     allPairs f c = and $ zipWith f c (tail c)
+    isStraight = nub rankCounts == [1] && ranks == [head ranks .. last ranks]
+    isFlush = length (nub $ map suit cards) == 1
+    rsort = reverse . sort
 
 compareHands :: Cards -> Cards -> Ordering
 compareHands l r = compare (handRank l) (handRank r)
