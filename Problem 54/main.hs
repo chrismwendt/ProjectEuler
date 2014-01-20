@@ -57,46 +57,40 @@ readCard s = Card (read (take 1 s) :: Rank) (read (take 1 $ drop 1 s) :: Suit)
 -- Convenience
 type Cards = [Card]
 
-type Pair = Cards
-
-type Triplet = Cards
-
-type Quadruplet = Cards
-
 -- Hand rank
 data HandRank =
       HighCards     Cards
-    | OnePair       Pair Cards
-    | TwoPairs      Pair Pair Cards
-    | ThreeOfAKind  Triplet Cards
+    | OnePair       Cards
+    | TwoPairs      Cards
+    | ThreeOfAKind  Cards
     | Straight      Cards
     | Flush         Cards
-    | FullHouse     Triplet Pair
-    | FourOfAKind   Quadruplet Cards
+    | FullHouse     Cards
+    | FourOfAKind   Cards
     | StraightFlush Cards
     | RoyalFlush    Cards
     deriving (Eq, Ord, Show)
 
 handRank :: Cards -> HandRank
 handRank cards
-    | ranks == [Ten .. Ace] && isFlush  =  RoyalFlush $ rsort cards
-    | isStraight && isFlush             =  StraightFlush $ rsort cards
-    | rankCounts == [1, 4]              =  FourOfAKind (rankGroups !! 1) (rankGroups !! 0)
-    | rankCounts == [2, 3]              =  FullHouse (rankGroups !! 1) (rankGroups !! 0)
-    | isFlush                           =  Flush $ rsort cards
-    | isStraight                        =  Straight $ rsort cards
-    | rankCounts == [1, 1, 3]           =  ThreeOfAKind (rankGroups !! 2) (take 2 $ concat rankGroups)
-    | rankCounts == [1, 2, 2]           =  TwoPairs (rankGroups !! 2) (rankGroups !! 1) (rankGroups !! 0)
-    | rankCounts == [1, 1, 1, 2]        =  OnePair (rankGroups !! 3) (take 3 $ concat rankGroups)
-    | otherwise                         =  HighCards $ rsort cards
+    | ranks == [Ten .. Ace] && isFlush  =  RoyalFlush    ordered
+    | isStraight && isFlush             =  StraightFlush ordered
+    | rankCounts == [4, 1]              =  FourOfAKind   ordered
+    | rankCounts == [3, 2]              =  FullHouse     ordered
+    | isFlush                           =  Flush         (reverse $ sort cards)
+    | isStraight                        =  Straight      ordered
+    | rankCounts == [3, 1, 1]           =  ThreeOfAKind  ordered
+    | rankCounts == [2, 2, 1]           =  TwoPairs      ordered
+    | rankCounts == [2, 1, 1, 1]        =  OnePair       ordered
+    | otherwise                         =  HighCards     ordered
     where
     ranks = sort $ map rank cards
-    rankGroups = sortBy (compare `on` length) $ reverse $ sort $ groupWith rank cards
+    rankGroups = reverse $ sortBy (compare `on` length) $ sort $ groupWith rank cards
+    ordered = concat rankGroups
     rankCounts = map length rankGroups
     allPairs f c = and $ zipWith f c (tail c)
     isStraight = nub rankCounts == [1] && ranks == [head ranks .. last ranks]
     isFlush = length (nub $ map suit cards) == 1
-    rsort = reverse . sort
 
 compareHands :: Cards -> Cards -> Ordering
 compareHands l r = compare (handRank l) (handRank r)
