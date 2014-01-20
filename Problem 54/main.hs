@@ -11,6 +11,7 @@ main = do
     text <- readFile "poker.txt"
     print $ length $ filter ("Player 1" ==) $ map winner $ lines text
 
+strValMap :: [(String, a)] -> [ReadPrec a]
 strValMap = map (\(x, y) -> lift $ string x >> return y)
 
 -- Rank
@@ -23,8 +24,10 @@ instance Show Rank where
 instance Read Rank where
     readPrec = choice $ strValMap stringToRank
 
+stringToRank :: [(String, Rank)]
 stringToRank = zip (words "2 3 4 5 6 7 8 9 T J Q K A") [Two .. Ace]
 
+rankToString :: [(Rank, String)]
 rankToString = map swap stringToRank
 
 -- Suit
@@ -37,8 +40,10 @@ instance Show Suit where
 instance Read Suit where
     readPrec = choice $ strValMap stringToSuit
 
+stringToSuit :: [(String, Suit)]
 stringToSuit = zip (words "C D H S") [Club .. Spade]
 
+suitToString :: [(Suit, String)]
 suitToString = map swap stringToSuit
 
 -- Card
