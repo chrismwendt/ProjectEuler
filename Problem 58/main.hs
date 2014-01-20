@@ -16,7 +16,7 @@ step (np, nc, ((l, s):ls)) = (np + genericLength np', nc + genericLength nc', ls
 rings :: [([Integer], Integer)]
 rings = iterate step ([1], 0)
     where
-    step = (\(l, s) -> (corners (last l) (s + 2), s + 2))
+    step (l, s) = (corners (last l) (s + 2), s + 2)
 
 corners :: Integer -> Integer -> [Integer]
 corners n l = [n + i*l | i <- [1..4]]
