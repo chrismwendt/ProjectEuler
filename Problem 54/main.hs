@@ -96,7 +96,7 @@ handRank cards
     ordered = concat rankGroups
     rankCounts = map length rankGroups
     allPairs f c = and $ zipWith f c (tail c)
-    isStraight = nub rankCounts == [1] && ranks == [head ranks, pred (head ranks) .. last ranks]
+    isStraight = ranks == [head ranks, pred (head ranks) .. last ranks]
     isFlush = length (nub $ map suit dCards) == 1
 
 compareHands :: Cards -> Cards -> Ordering
