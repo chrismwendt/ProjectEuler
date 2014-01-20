@@ -18,7 +18,7 @@ instance Show Rank where
 instance Read Rank where
     readPrec = choice $ strValMap stringToRank
 
-data Suit = Spade | Club | Diamond | Heart
+data Suit = Club | Diamond | Heart | Spade
     deriving (Eq, Ord, Enum)
 
 instance Show Suit where
@@ -44,9 +44,9 @@ stringToRank =
     ]
 
 stringToSuit =
-    [ ("H", Heart)
+    [ ("C", Club)
     , ("D", Diamond)
-    , ("C", Club)
+    , ("H", Heart)
     , ("S", Spade)
     ]
 
