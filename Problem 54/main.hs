@@ -79,21 +79,20 @@ data HandRank =
 
 handRank :: Cards -> HandRank
 handRank cards
-    | ranks == [Ace, King .. Ten] && isFlush = RoyalFlush    ordered
-    | isStraight && isFlush                  = StraightFlush ordered
-    | rankCounts == [4, 1]                   = FourOfAKind   ordered
-    | rankCounts == [3, 2]                   = FullHouse     ordered
+    | ranks == [Ace, King .. Ten] && isFlush = RoyalFlush    (concat rankGroups)
+    | isStraight && isFlush                  = StraightFlush (concat rankGroups)
+    | rankCounts == [4, 1]                   = FourOfAKind   (concat rankGroups)
+    | rankCounts == [3, 2]                   = FullHouse     (concat rankGroups)
     | isFlush                                = Flush         dCards
-    | isStraight                             = Straight      ordered
-    | rankCounts == [3, 1, 1]                = ThreeOfAKind  ordered
-    | rankCounts == [2, 2, 1]                = TwoPairs      ordered
-    | rankCounts == [2, 1, 1, 1]             = OnePair       ordered
-    | otherwise                              = HighCards     ordered
+    | isStraight                             = Straight      (concat rankGroups)
+    | rankCounts == [3, 1, 1]                = ThreeOfAKind  (concat rankGroups)
+    | rankCounts == [2, 2, 1]                = TwoPairs      (concat rankGroups)
+    | rankCounts == [2, 1, 1, 1]             = OnePair       (concat rankGroups)
+    | otherwise                              = HighCards     (concat rankGroups)
     where
     dCards = reverse $ sort cards
     ranks = map rank dCards
     rankGroups = reverse $ sortBy (compare `on` length) $ groupWith rank dCards
-    ordered = concat rankGroups
     rankCounts = map length rankGroups
     isStraight = ranks == [head ranks, pred (head ranks) .. last ranks]
     isFlush = length (nub $ map suit dCards) == 1
