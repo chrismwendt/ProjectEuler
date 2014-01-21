@@ -2,6 +2,8 @@ import Data.Numbers.Primes
 import Data.Maybe
 import Data.List
 
+-- TODO try using a concatable lookup table with the state monad
+
 main :: IO ()
 main = print $ sum $ head $ setsN 5
 
