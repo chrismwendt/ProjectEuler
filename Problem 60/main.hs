@@ -15,6 +15,4 @@ setsN' prevs n
         p <- filter (concatable prevs) $ takeWhile (< head prevs) primes]
 
 concatable :: [Integer] -> Integer -> Bool
-concatable ps i = and [isPrime (read $ i' ++ p') && isPrime (read $ p' ++ i') |
-    p <- ps,
-    let (i', p') = (show i, show p)]
+concatable ps i = and [isPrime $ read $ f (++) (show i) (show p) | p <- ps, f <- [id, flip]]
