@@ -6,14 +6,14 @@ main :: IO ()
 main = print $ sum $ head $ concatableSetsN 5
 
 concatableSetsN :: Integer -> [[Integer]]
-concatableSetsN n = concatMap (\p -> map ((:) p) $ concatableSetsN' [p] (n - 1)) primes
+concatableSetsN n = concatMap (\p -> concatableSetsN' [p] n) primes
 
 concatableSetsN' :: [Integer] -> Integer -> [[Integer]]
 concatableSetsN' prevs n
-    | n == 0 = [[]]
-    | otherwise = [p : set |
+    | genericLength prevs == n = [prevs]
+    | otherwise = [set |
         p <- filter (concatable prevs) $ takeWhile (< head prevs) primes,
-        set <- concatableSetsN' (p:prevs) (n - 1)]
+        set <- concatableSetsN' (p:prevs) n]
 
 concatable :: [Integer] -> Integer -> Bool
 concatable ps i = and [isPrime (read $ i' ++ p') && isPrime (read $ p' ++ i') |
