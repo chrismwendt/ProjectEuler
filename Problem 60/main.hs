@@ -3,15 +3,15 @@ import Data.Maybe
 import Data.List
 
 main :: IO ()
-main = print $ sum $ head $ concatableSetsN 5
+main = print $ sum $ head $ setsN 5
 
-concatableSetsN :: Integer -> [[Integer]]
-concatableSetsN n = concatMap (\p -> concatableSetsN' [p] n) primes
+setsN :: Integer -> [[Integer]]
+setsN n = concatMap (\p -> setsN' [p] n) primes
 
-concatableSetsN' :: [Integer] -> Integer -> [[Integer]]
-concatableSetsN' prevs n
+setsN' :: [Integer] -> Integer -> [[Integer]]
+setsN' prevs n
     | genericLength prevs == n = [prevs]
-    | otherwise = concat [concatableSetsN' (p:prevs) n |
+    | otherwise = concat [setsN' (p:prevs) n |
         p <- filter (concatable prevs) $ takeWhile (< head prevs) primes]
 
 concatable :: [Integer] -> Integer -> Bool
