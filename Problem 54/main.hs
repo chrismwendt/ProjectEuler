@@ -18,7 +18,7 @@ winner s = case winner' s of
     GT -> "Player 1"
     where
     winner' s = compare (handRank $ take 5 cards) (handRank $ drop 5 cards)
-    cards = map readCard $ words s
+    cards = map read $ words s
 
 strValMap :: [(String, a)] -> [ReadPrec a]
 strValMap = map (\(x, y) -> lift $ string x >> return y)
@@ -65,9 +65,12 @@ instance Ord Card where
 instance Show Card where
     show (Card { rank=r, suit=s }) = fromJust (lookup r rankToString) ++ fromJust (lookup s suitToString)
 
--- TODO make Card an instance of Read
-readCard :: String -> Card
-readCard s = Card (read (take 1 s) :: Rank) (read (take 1 $ drop 1 s) :: Suit)
+instance Read Card where
+    readsPrec _ (r:s:cs)
+        | [r] `elem` map fst stringToRank &&
+          [s] `elem` map fst stringToSuit = [(Card (fromJust $ lookup [r] stringToRank) (fromJust $ lookup [s] stringToSuit), cs)]
+        | otherwise = []
+    readsPrec _ _ = []
 
 -- Convenience
 type Cards = [Card]
