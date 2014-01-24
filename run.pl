@@ -32,7 +32,7 @@ sub main {
     print "Running problem $problem in $language...\n";
 
     my $cwd = getcwd;
-    chdir "Problem\ $problem" or die "$!";
+    chdir "Problem$problem" or die "$!";
     run($presets->{$language});
 
     chdir $cwd or die "$!";
