@@ -2,7 +2,6 @@
 -- TODO increase speed
 
 import Data.List
-import Data.Function
 import qualified Data.IntMap as I
 import Data.Maybe
 
@@ -11,10 +10,10 @@ main = print . (+) 1 . fromJust $ elemIndex (maximum l) l where
     l = collatzLengths [1..1000000]
 
 collatzLengths :: [Int] -> [Int]
-collatzLengths l = collatzLengths' (I.singleton 1 1) l
+collatzLengths = collatzLengths' (I.singleton 1 1)
 
 collatzLengths' :: I.IntMap Int -> [Int] -> [Int]
-collatzLengths' m [] = []
+collatzLengths' _ [] = []
 collatzLengths' m (x:xs) = v : collatzLengths' m' xs where
     (v, m') = insertCollatz x m
 
