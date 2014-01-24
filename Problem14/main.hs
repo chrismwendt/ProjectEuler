@@ -3,11 +3,11 @@
 
 import Data.List
 import qualified Data.IntMap as M
-import Data.Maybe
 import Control.Monad.State
+import Data.Ord
 
 main :: IO ()
-main = print . (+) 1 . fromJust $ elemIndex (maximum l) l where
+main = print $ fst $ maximumBy (comparing snd) $ zip [1..] l where
     l = evalState (collatzs [1..1000000]) (M.singleton 1 1)
 
 step :: Int -> Int
