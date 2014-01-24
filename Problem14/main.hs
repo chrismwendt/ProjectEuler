@@ -4,26 +4,26 @@
 import Data.List
 import qualified Data.IntMap as M
 import Data.Maybe
+import Control.Monad.State
 
 main :: IO ()
 main = print . (+) 1 . fromJust $ elemIndex (maximum l) l where
-    l = collatzLengths [1..1000000]
-
-collatzLengths :: [Int] -> [Int]
-collatzLengths = collatzLengths' (M.singleton 1 1)
-
-collatzLengths' :: M.IntMap Int -> [Int] -> [Int]
-collatzLengths' _ [] = []
-collatzLengths' m (x:xs) = v : collatzLengths' m' xs where
-    (v, m') = insertCollatz x m
-
-insertCollatz :: Int -> M.IntMap Int -> (Int, M.IntMap Int)
-insertCollatz x m = case M.lookup x m of
-    Just v -> (v, m)
-    Nothing -> (v' + 1, M.insert x (v' + 1) m') where
-        (v', m') = insertCollatz (step x) m
+    l = evalState (collatzs [1..1000000]) (M.singleton 1 1)
 
 step :: Int -> Int
 step n
     | even n = n `div` 2
     | otherwise = 3 * n + 1
+
+collatz :: Int -> State (M.IntMap Int) Int
+collatz n = do
+    m <- get
+    if n `M.member` m
+        then return (m M.! n)
+        else do
+            c <- collatz (step n)
+            modify (M.insert n (c + 1))
+            return (c + 1)
+
+collatzs :: [Int] -> State (M.IntMap Int) [Int]
+collatzs = mapM collatz
