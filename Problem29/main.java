@@ -24,9 +24,6 @@ public class main {
             for (int b = 2; b <= 100; b++) {
                 int size = distinctTerms.size();
                 distinctTerms.add(primeFactorizationOfPower(a, b));
-                if (distinctTerms.size() == size) {
-                    System.out.println(a + " " + b);
-                }
             }
         }
         
