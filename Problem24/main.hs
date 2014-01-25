@@ -1,6 +1,6 @@
 import Data.List
 
-main = print $ nthPermutation (1000000 - 1) ['0'..'9']
+main = putStrLn $ nthPermutation (1000000 - 1) ['0'..'9']
 
 nthPermutation 0 a = a
 nthPermutation n a = a !! i : nthPermutation j (remove i a) where
