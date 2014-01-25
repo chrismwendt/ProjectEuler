@@ -6,6 +6,7 @@ import Data.Maybe
 main :: IO ()
 main = print $ (\(a, b, ((l, s):ls)) -> s - 1) $ fromJust $ find condition $ iterate step (0, 0, rings)
 
+condition :: (Integer, Integer, t) -> Bool
 condition (np, nc, l)
     | np == 0 || nc == 0 = False
     | otherwise = fromInteger np / fromInteger (np + nc) < 0.1

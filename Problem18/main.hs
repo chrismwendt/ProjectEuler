@@ -1,3 +1,4 @@
+main :: IO ()
 main = print . head . foldr1 f $ triangle where
     f r b = zipWith (+) r $ zipWith max b (tail b)
 

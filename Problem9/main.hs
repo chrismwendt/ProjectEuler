@@ -1,5 +1,6 @@
 import Data.List
 
+main :: IO ()
 main = putStrLn . show . head $ map product [[a,b,c] | b <- [292..499], let (a, m) = (500000 - 1000 * b) `divMod` (1000 - b), let c = 1000 - a - b, m == 0]
 
 -- (0) given a < b < c

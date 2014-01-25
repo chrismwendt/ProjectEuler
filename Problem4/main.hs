@@ -1,6 +1,7 @@
 import Data.List
 import Data.Maybe
 
+main :: IO ()
 main = print $ fromJust $ find palindrome $ descendingProducts ns ns where
     ns = [999,998..100]
 
@@ -11,9 +12,11 @@ descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest where
     column = map (* n) ms
     rest = descendingProducts ns ms
 
+palindrome :: Show a => a -> Bool
 palindrome n = s == reverse s where
     s = show n
 
+mergeBy :: (t -> t -> Ordering) -> [t] -> [t] -> [t]
 mergeBy cmp a [] = a
 mergeBy cmp [] b = b
 mergeBy cmp (a:as) (b:bs)

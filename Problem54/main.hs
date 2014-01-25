@@ -7,6 +7,7 @@ import Text.ParserCombinators.ReadP hiding (choice)
 import Text.ParserCombinators.ReadPrec hiding (choice)
 import Data.Tuple
 
+main :: IO ()
 main = do
     text <- readFile "poker.txt"
     print $ length $ filter ("Player 1" ==) $ map winner $ lines text

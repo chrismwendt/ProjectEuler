@@ -1,5 +1,7 @@
+main :: IO ()
 main = print . length . concat . concatMap words . map verbalize $ [1..1000]
 
+verbalize :: Int -> [Char]
 verbalize n
     | n == 1000 = "one thousand"
     | n >= 100 && hm == 0 = verbalizeDigit hd ++ " hundred"

@@ -1,24 +1,32 @@
 import Data.List
 import Data.Maybe
 
+main :: IO ()
 main = print . maximum . map product $ consecutives2D 4 grid
 
+consecutives2D :: Int -> [[a]] -> [[a]]
 consecutives2D n = concatMap (consecutives n) . slices
 
+consecutives :: Int -> [a] -> [[a]]
 consecutives n = map (take n) . filter ((>= n) . length) . tails
 
+slices :: [[a]] -> [[a]]
 slices grid = concatMap ($ grid) [horizontals, verticals, diagonalLefts, diagonalRights] where
     horizontals = id
     verticals = transpose
     diagonalLefts = map catMaybes . transpose . stagger Nothing . map2D Just
     diagonalRights = diagonalLefts . reverse
 
+stagger :: a -> [[a]] -> [[a]]
 stagger p = zipWith (++) (triangularList p)
 
+triangularList :: a -> [[a]]
 triangularList = inits . repeat
 
+map2D :: (a -> b) -> [[a]] -> [[b]]
 map2D = map . map
 
+grid :: [[Integer]]
 grid = map2D read . map words . lines $
     "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08\n\
     \49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00\n\
