@@ -17,10 +17,7 @@ overlaps :: [Int] -> Bool
 overlaps as = all (uncurry overlap2) $ zip as (tail as)
 
 overlap2 :: Int -> Int -> Bool
-overlap2 a b = lastN 2 (show a) == take 2 (show b)
-
-lastN :: Int -> [a] -> [a]
-lastN n = reverse . take n . reverse
+overlap2 a b = a `mod` 100 == b `div` 100
 
 cyclicPermutations :: [a] -> [[a]]
 cyclicPermutations (a:as) = map (a :) $ permutations as
