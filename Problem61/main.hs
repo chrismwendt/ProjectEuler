@@ -4,7 +4,7 @@ import Data.Maybe
 main :: IO ()
 main = print $ sum $
     fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap (sequenceF f) $
-    cyclicPermutations $ map (takeWhile (< 10000) . dropWhile (< 1000)) polygons
+    cyclicPermutations $ polygons
     where
     f x = filter (\l -> null l || overlap2 x (head l))
 
@@ -20,7 +20,7 @@ cyclicPermutations :: [a] -> [[a]]
 cyclicPermutations (a:as) = map (a :) $ permutations as
 
 polygons :: [[Int]]
-polygons = map (flip map [1..]) nToPolygon
+polygons = map (\f -> takeWhile (< 10000) $ dropWhile (< 1000) $ map f [1..]) nToPolygon
 
 nToPolygon :: [Int -> Int]
 nToPolygon =
