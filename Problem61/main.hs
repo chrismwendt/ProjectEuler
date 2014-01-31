@@ -28,10 +28,10 @@ cyclicPermutations :: [a] -> [[a]]
 cyclicPermutations (a:as) = map (a :) $ permutations as
 
 polygons :: [[Int]]
-polygons = map (flip map [1..]) polyganizes
+polygons = map (flip map [1..]) nToPolygon
 
-polyganizes :: [Int -> Int]
-polyganizes =
+nToPolygon :: [Int -> Int]
+nToPolygon =
     [ \n -> n * (n + 1) `div` 2
     , \n -> n * n
     , \n -> n * (3 * n - 1) `div` 2
