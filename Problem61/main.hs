@@ -2,14 +2,15 @@ import Data.List
 import Data.Maybe
 
 main :: IO ()
-main = print $ sum $ fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap (sequenceF f) $ cyclicPermutations $ map (range 1000 9999) $ take 6 polygons
-    where
-    f x = filter (\l -> overlaps (x:take 1 l))
+main = print $ sum $ fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap gen $ cyclicPermutations $ zip polyCeil nextPoly
 
-sequenceF :: Monad m => (a -> m [a] -> m [a]) -> [m a] -> m [a]
-sequenceF f = foldr mfcons (return [])
+gen :: [(Int -> Int, Int -> Int)] -> [[Int]]
+gen = foldr mfcons [[]]
     where
-    mfcons p q = p >>= \x -> f x q >>= \y -> return (x:y)
+    mfcons (ce, ne) qss = [p:qs | p <- prange 1000 9999 ce ne, qs <- qss, overlaps (p:take 1 qs)]
+
+prange :: Int -> Int -> (Int -> Int) -> (Int -> Int) -> [Int]
+prange l h fceil fnext = takeWhile (<= h) $ iterate fnext (fceil l)
 
 overlaps :: [Int] -> Bool
 overlaps as = and $ zipWith overlap2 as (tail as)
@@ -17,16 +18,11 @@ overlaps as = and $ zipWith overlap2 as (tail as)
 overlap2 :: Int -> Int -> Bool
 overlap2 a b = lastN 2 (show a) == take 2 (show b)
 
--- TODO try coming up with a formula for polygonal ceiling
-
 lastN :: Int -> [a] -> [a]
 lastN n = reverse . take n . reverse
 
 cyclicPermutations :: [a] -> [[a]]
 cyclicPermutations (a:as) = map (a :) $ permutations as
-
-polygons :: [[Int]]
-polygons = map (flip map [1..]) nToPolygon
 
 nToPolygon :: [Int -> Int]
 nToPolygon =
@@ -38,6 +34,18 @@ nToPolygon =
     , \n -> n * (3 * n - 2)
     ]
 
+polygonToNCeiling :: [Int -> Int]
+polygonToNCeiling = map (\f -> ceiling . f . fromIntegral)
+    [ \p -> (-1)/2 + sqrt (1/4 + 2*p)
+    , \p -> sqrt p
+    , \p -> (1/2 + sqrt (1/4 + 6*p)) / 3
+    , \p -> (1 + sqrt (1 + 8*p)) / 4
+    , \p -> (3/2 + sqrt (9/4 + 10*p)) / 5
+    , \p -> (2 + sqrt (4 + 12*p)) / 6
+    ]
+    
+polyCeil :: [Int -> Int]
+polyCeil = zipWith (.) nToPolygon polygonToNCeiling
 
-range :: Ord a => a -> a -> [a] -> [a]
-range a b = takeWhile (<= b) . dropWhile (< a)
+nextPoly :: [Int -> Int]
+nextPoly = map (. (+1)) polyCeil
