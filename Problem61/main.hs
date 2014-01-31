@@ -1,25 +1,24 @@
 import Data.List
+import Data.Maybe
 
 main :: IO ()
--- main = undefined
-main = print $ sum $ head $ concatMap (derp 2) $ cyclicPermutations $ map (range 1000 9999) $ take 6 polygons
+main = print $ sum $ fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap (sequenceF f) $ cyclicPermutations $ map (range 1000 9999) $ take 6 polygons
+    where
+    f x = filter (\l -> overlaps (x:take 1 l))
+
+sequenceF :: Monad m => (a -> m [a] -> m [a]) -> [m a] -> m [a]
+sequenceF f = foldr mfcons (return [])
+    where
+    mfcons p q = p >>= \x -> f x q >>= \y -> return (x:y)
+
+overlaps :: [Int] -> Bool
+overlaps as = and $ zipWith overlap2 as (tail as)
+
+overlap2 :: Int -> Int -> Bool
+overlap2 a b = lastN 2 (show a) == take 2 (show b)
 
 -- TODO try coming up with a formula for polygonal ceiling
 -- TODO try deriving the recurrences
-
-derp :: Int -> [[Int]] -> [[Int]]
-derp _ [] = []
-derp overlap (ps:pss) = filter (\l -> (lastN overlap $ show (last l)) == (take overlap $ show (head l))) $ filter (\l -> length l == length pss + 1) $ concatMap f ps
-    where
-    f p = map (\l -> p : l) $ derp' (lastN overlap $ show p) pss
-
-derp' :: String -> [[Int]] -> [[Int]]
-derp' _ [] = []
-derp' prefix [a] = [filter (isPrefixOf prefix . show) a]
-derp' prefix (ps:pss) = concatMap f ps'
-    where
-    ps' = filter (isPrefixOf prefix . show) ps
-    f p = map (\l -> p : l) $ derp' (lastN (length prefix) $ show p) pss
 
 lastN :: Int -> [a] -> [a]
 lastN n = reverse . take n . reverse
