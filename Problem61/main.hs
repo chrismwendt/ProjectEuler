@@ -2,7 +2,7 @@ import Data.List
 import Data.Maybe
 
 main :: IO ()
-main = print $ sum $ fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap (sequenceF f) $ cyclicPermutations $ map (range 1000 9999) $ take 6 polygons
+main = print $ sum $ fromJust $ find (\l -> overlap2 (last l) (head l)) $ concatMap (sequenceF f) $ cyclicPermutations $ map (range 1000 9999) polygons
     where
     f x = filter (\l -> overlaps (x:take 1 l))
 
