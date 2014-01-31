@@ -18,7 +18,6 @@ overlap2 :: Int -> Int -> Bool
 overlap2 a b = lastN 2 (show a) == take 2 (show b)
 
 -- TODO try coming up with a formula for polygonal ceiling
--- TODO try deriving the recurrences
 
 lastN :: Int -> [a] -> [a]
 lastN n = reverse . take n . reverse
