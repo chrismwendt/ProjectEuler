@@ -36,6 +36,5 @@ nToPolygon =
     , \n -> n * (3 * n - 2)
     ]
 
-
 range :: Ord a => a -> a -> [a] -> [a]
 range a b = takeWhile (<= b) . dropWhile (< a)
