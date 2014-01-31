@@ -14,7 +14,7 @@ sequenceF f = foldr mfcons (return [])
     mfcons p q = p >>= \x -> f x q >>= \y -> return (x:y)
 
 overlaps :: [Int] -> Bool
-overlaps as = and $ zipWith overlap2 as (tail as)
+overlaps as = all (uncurry overlap2) $ zip as (tail as)
 
 overlap2 :: Int -> Int -> Bool
 overlap2 a b = lastN 2 (show a) == take 2 (show b)
