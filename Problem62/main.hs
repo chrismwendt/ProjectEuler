@@ -1,7 +1,8 @@
 import Data.List
+import Data.Maybe
 
 main :: IO ()
-main = print $ find (\cube -> count (isPermutation cube) (takeWhile (<= ceilingPower10 cube) cubes) == 5) $ cubes
+main = print $ fromJust $ find (\cube -> count (isPermutation cube) (takeWhile (<= ceilingPower10 cube) cubes) == 5) $ cubes
 
 ceilingPower10 :: Int -> Int
 ceilingPower10 n = 10^(ceiling $ log (fromIntegral n) / log 10)
