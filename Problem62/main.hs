@@ -1,23 +1,16 @@
 import Data.List
-import Data.Maybe
+import qualified Data.Map as M
 
 main :: IO ()
-main = print $ fromJust $ find (\cube -> count (isPermutation cube) (takeWhile (<= ceilingPower10 cube) cubes) == 5) $ cubes
+main = print $ lim 5 M.empty cubes
 
-ceilingPower10 :: Int -> Int
-ceilingPower10 n = 10^(ceiling $ log (fromIntegral n) / log 10)
-
-isPermutation :: Int -> Int -> Bool
-isPermutation a b = (sort $ show a) == (sort $ show b)
-
-count :: (a -> Bool) -> [a] -> Int
-count f = length . filter f
-
-perms :: Int -> [Int]
-perms = map read . filter noLeadingZero . nub . permutations . show
-
-noLeadingZero :: String -> Bool
-noLeadingZero = not . isPrefixOf "0"
+lim l m (c:cs) = case M.lookup c' m of
+    Just (n, count) -> if count == l-1
+        then n
+        else lim l (M.adjust (\(n', count') -> (n', count' + 1)) c' m) cs
+    Nothing -> lim l (M.insert c' (c, 1) m) cs
+    where
+    c' = sort $ show c
 
 cubes :: [Int]
 cubes = map (^3) [1..]
