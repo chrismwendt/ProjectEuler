@@ -7,8 +7,9 @@ import Control.Monad.State
 import Data.Ord
 
 main :: IO ()
-main = print $ fst $ maximumBy (comparing snd) $ zip [1..] l where
-    l = evalState (collatzs [1..1000000]) (M.singleton 1 1)
+main = print $ fst $ maximumBy (comparing snd) $ zip ns l where
+    l = evalState (collatzs ns) (M.singleton 1 1)
+    ns = [1..1000000] :: [Int]
 
 step :: Int -> Int
 step n
