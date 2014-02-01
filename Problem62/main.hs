@@ -1,7 +1,10 @@
 import Data.List
 
 main :: IO ()
-main = print $ find (\cube -> count (isPermutation cube) (takeWhile (<= 10*cube) cubes) == 5) $ cubes
+main = print $ find (\cube -> count (isPermutation cube) (takeWhile (<= ceilingPower10 cube) cubes) == 5) $ cubes
+
+ceilingPower10 :: Int -> Int
+ceilingPower10 n = 10^(ceiling $ log (fromIntegral n) / log 10)
 
 isPermutation :: Int -> Int -> Bool
 isPermutation a b = (sort $ show a) == (sort $ show b)
