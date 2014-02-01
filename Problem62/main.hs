@@ -4,12 +4,12 @@ import qualified Data.Map as M
 main :: IO ()
 main = print $ lim 5 M.empty cubes
 
-lim :: Int -> M.Map String (Int, Int) -> [Int] -> Int
+lim :: Int -> M.Map String [Int] -> [Int] -> Int
 lim l m (c:cs) = case M.lookup c' m of
-    Just (n, count) -> if count == l-1
-        then n
-        else lim l (M.adjust (\(n', count') -> (n', count' + 1)) c' m) cs
-    Nothing -> lim l (M.insert c' (c, 1) m) cs
+    Just ps -> if length ps == l-1
+        then minimum ps
+        else lim l (M.adjust ((:) c) c' m) cs
+    Nothing -> lim l (M.insert c' [c] m) cs
     where
     c' = sort $ show c
 
