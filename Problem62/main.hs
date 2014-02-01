@@ -4,6 +4,7 @@ import qualified Data.Map as M
 main :: IO ()
 main = print $ lim 5 M.empty cubes
 
+lim :: Int -> M.Map String (Int, Int) -> [Int] -> Int
 lim l m (c:cs) = case M.lookup c' m of
     Just (n, count) -> if count == l-1
         then n
