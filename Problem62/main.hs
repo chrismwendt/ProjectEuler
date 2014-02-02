@@ -1,17 +1,16 @@
 import Data.List
+import Data.Maybe
 import qualified Data.Map as M
+import Control.Monad.State as S
 
 main :: IO ()
-main = print $ lim 5 M.empty cubes
+main = print $ minimum $ fromJust $ find ((5 ==) . length) $ S.evalState (mapM collisions cubes) M.empty
 
-lim :: Int -> M.Map String [Int] -> [Int] -> Int
-lim l m (c:cs) = case M.lookup c' m of
-    Just ps -> if length ps == l-1
-        then minimum ps
-        else lim l (M.adjust ((:) c) c' m) cs
-    Nothing -> lim l (M.insert c' [c] m) cs
-    where
-    c' = sort $ show c
+collisions :: Int -> S.State (M.Map String [Int]) [Int]
+collisions n = let n' = sort $ show n in do
+    modify $ M.insertWith (++) n' [n]
+    s <- S.get
+    return $ M.findWithDefault [] n' s
 
 cubes :: [Int]
 cubes = map (^3) [1..]
