@@ -1,6 +1,3 @@
--- TODO reduce memory usage
--- TODO increase speed
-
 import Data.List
 import qualified Data.IntMap as M
 import Control.Monad.State
