@@ -1,16 +1,22 @@
 import Data.List
-import Data.Maybe
 import qualified Data.Map as M
-import Control.Monad.State as S
 
 main :: IO ()
-main = print $ minimum $ fromJust $ find ((5 ==) . length) $ S.evalState (mapM collisions cubes) M.empty
+main = print $ minimum . fst3 $ until found next ([], M.empty, cubes)
 
-collisions :: Integer -> S.State (M.Map String [Integer]) [Integer]
-collisions n = let n' = sort $ show n in do
-    modify $ M.insertWith (++) n' [n]
-    s <- S.get
-    return $ M.findWithDefault [] n' s
+fst3 :: (a, b, c) -> a
+fst3 (a, _, _) = a
+
+found ::  ([a], b, c) -> Bool
+found = (5 ==) . length . fst3
+
+type State = ([Integer], M.Map String [Integer], [Integer])
+
+next :: State -> State
+next (_, m, c:cs) = (cur, M.insert c' cur m, cs)
+    where
+    c' = sort $ show c
+    cur = c : M.findWithDefault [] c' m
 
 cubes :: [Integer]
 cubes = map (^3) [1..]
