@@ -1,5 +1,5 @@
 import Data.List
-import qualified Data.Map as M
+import qualified Data.MultiMap as M
 
 main :: IO ()
 main = print $ minimum . fst $ until found next ([], (M.empty, cubes))
@@ -7,13 +7,13 @@ main = print $ minimum . fst $ until found next ([], (M.empty, cubes))
 found ::  ([a], (b, c)) -> Bool
 found = (5 ==) . length . fst
 
-type State = ([Integer], (M.Map String [Integer], [Integer]))
+type State = ([Integer], (M.MultiMap String Integer, [Integer]))
 
 next :: State -> State
-next (_, (m, c:cs)) = (cur, (M.insert c' cur m, cs))
+next (_, (m, c:cs)) = (M.lookup c' m', (m', cs))
     where
     c' = sort $ show c
-    cur = c : M.findWithDefault [] c' m
+    m' = M.insert c' c m
 
 cubes :: [Integer]
 cubes = map (^3) [1..]
