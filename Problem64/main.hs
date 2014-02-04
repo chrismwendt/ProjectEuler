@@ -1,9 +1,19 @@
 import Data.List
 import Data.Ratio
-import Data.Maybe
 import qualified Data.Set as Set
 import qualified Control.Monad.Loops as L
 import qualified Control.Monad.State as S
+
+data InfiniteList a = InfiniteList a (InfiniteList a)
+
+instance Functor InfiniteList where
+    fmap f (InfiniteList e rest) = InfiniteList (f e) (fmap f rest)
+
+tail' :: InfiniteList a -> InfiniteList a
+tail' (InfiniteList _ as) = as
+
+iterate' :: (a -> a) -> a -> InfiniteList a
+iterate' f a = InfiniteList a (fmap f $ iterate' f a)
 
 main :: IO ()
 main = print $ count (odd . length . snd) $ map continuedFraction $ filter (not . isSquare) [1..10000]
@@ -17,13 +27,13 @@ isSquare x = (squareRoot x)^2 == x
 type Step = (Integer, Integer, Integer, Integer)
 
 continuedFraction :: Integer -> (Integer, [Integer])
-continuedFraction n = (n', S.evalState (L.whileJust untilRepeat (\(_, a, _, _) -> return a)) (Set.empty, tail $ iterate step (n, n', 1, -n')))
+continuedFraction n = (n', S.evalState (L.whileJust untilRepeat (\(_, a, _, _) -> return a)) (Set.empty, tail' $ iterate' step (n, n', 1, -n')))
     where
     n' = squareRoot n
 
-untilRepeat :: S.State (Set.Set Step, [Step]) (Maybe Step)
+untilRepeat :: S.State (Set.Set Step, InfiniteList Step) (Maybe Step)
 untilRepeat = do
-    (set, s:ss) <- S.get
+    (set, InfiniteList s ss) <- S.get
     if s `Set.member` set
         then return Nothing
         else do
