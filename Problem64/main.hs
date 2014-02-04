@@ -2,6 +2,7 @@ import Data.List
 import Data.Ratio
 import Data.Maybe
 import qualified Data.Set as Set
+import qualified Control.Monad.Loops as L
 import qualified Control.Monad.State as S
 
 main :: IO ()
@@ -16,17 +17,17 @@ isSquare x = (squareRoot x)^2 == x
 type Step = (Integer, Integer, Integer, Integer)
 
 continuedFraction :: Integer -> (Integer, [Integer])
-continuedFraction n = (n', tail $ map (\(_, a, _, _) -> a) $ catMaybes $ takeWhile isJust $ S.evalState (mapM untilRepeat (iterate step (n, n', 1, -n'))) Set.empty)
+continuedFraction n = (n', S.evalState (L.whileJust untilRepeat (\(_, a, _, _) -> return a)) (Set.empty, tail $ iterate step (n, n', 1, -n')))
     where
     n' = squareRoot n
 
-untilRepeat :: Step -> S.State (Set.Set Step) (Maybe Step)
-untilRepeat s = do
-    set <- S.get
+untilRepeat :: S.State (Set.Set Step, [Step]) (Maybe Step)
+untilRepeat = do
+    (set, s:ss) <- S.get
     if s `Set.member` set
         then return Nothing
         else do
-            S.modify $ Set.insert s
+            S.put (Set.insert s set, ss)
             return $ Just s
 
 step :: Step -> Step
