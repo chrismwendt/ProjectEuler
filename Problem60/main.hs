@@ -15,10 +15,10 @@ setsN' :: [Integer] -> Integer -> [[Integer]]
 setsN' prevs n
     | genericLength prevs == n = [prevs]
     | otherwise = concat [setsN' (p:prevs) n |
-        p <- filter (concatable prevs) $ takeWhile (< head prevs) primes]
+        p <- filter (\i -> all (concatable i) prevs) $ takeWhile (< head prevs) primes]
 
-concatable :: [Integer] -> Integer -> Bool
-concatable ps i = and [isPrime $ f concatenate i p | p <- ps, f <- [id, flip]]
+concatable :: Integer -> Integer -> Bool
+concatable a b = isPrime (concatenate a b) && isPrime (concatenate b a)
 
 concatenate :: Integer -> Integer -> Integer
 concatenate a b = a * 10^(integerLogBase 10 b + 1) + b
