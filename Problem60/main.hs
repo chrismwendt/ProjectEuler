@@ -1,6 +1,7 @@
 import Data.Numbers.Primes
 import Data.Maybe
 import Data.List
+import Math.NumberTheory.Logarithms
 
 -- TODO try using a concatable lookup table with the state monad
 
@@ -17,4 +18,7 @@ setsN' prevs n
         p <- filter (concatable prevs) $ takeWhile (< head prevs) primes]
 
 concatable :: [Integer] -> Integer -> Bool
-concatable ps i = and [isPrime $ read $ f (++) (show i) (show p) | p <- ps, f <- [id, flip]]
+concatable ps i = and [isPrime $ f concatenate i p | p <- ps, f <- [id, flip]]
+
+concatenate :: Integer -> Integer -> Integer
+concatenate a b = a * 10^(integerLogBase 10 b + 1) + b
