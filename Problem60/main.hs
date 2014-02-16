@@ -1,5 +1,4 @@
 import Data.Numbers.Primes
-import Data.Maybe
 import Data.List
 import Math.NumberTheory.Logarithms
 
