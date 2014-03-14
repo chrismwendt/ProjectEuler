@@ -5,6 +5,7 @@ main :: IO ()
 main = print $ fromJust $ find palindrome $ descendingProducts ns ns where
     ns = [999, 998 .. 100]
 
+descendingProducts :: (Num a, Ord a) => [a] -> [a] -> [a]
 descendingProducts [] _ = []
 descendingProducts _ [] = []
 descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest where
