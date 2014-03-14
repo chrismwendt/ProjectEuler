@@ -1,27 +1,31 @@
-import Data.Char
+{-# LANGUAGE FlexibleInstances #-}
+
 import Data.List
-import Data.Function
+import qualified Data.Heap as H
+import qualified Data.Tree as T
+import Data.Ord
+
+instance Ord a => Ord (T.Tree a) where
+    compare = comparing T.rootLabel
 
 main :: IO ()
-main = print $ sum $ nub $ map trd $ filter isPandigital $ takeWhile ((<= 10000) . trd) $ ascendingProducts [1..] [1..]
+main = print $ sum $ nub $ map _1of3 $ filter isPandigital $ takeWhile ((<= 10000) . _1of3) $ ascendingProducts [1..]
 
 isPandigital :: Show a => (a, a, a) -> Bool
 isPandigital (n, m, p) = sort (concatMap show [n, m, p]) == ['1'..'9']
 
-ascendingProducts :: (Num b, Ord b) => [b] -> [b] -> [(b, b, b)]
-ascendingProducts [] _ = []
-ascendingProducts _ [] = []
-ascendingProducts (n:ns) (m:ms) = (n, m, n * m) : mergeBy (compare `on` trd) column rest
+ascendingProducts :: [Integer] -> [(Integer, Integer, Integer)]
+ascendingProducts as = unfoldr (fmap f . H.view) (H.singleton $ diagonal as :: H.MinHeap (T.Tree (Integer, Integer, Integer)))
     where
-    column = map (\m -> (n, m, n * m)) ms
-    rest = ascendingProducts ns ms
+    f (T.Node i ns, t) = (i, t `H.union` H.fromList ns)
 
-trd :: (t, t1, t2) -> t2
-trd (a, b, c) = c
+column :: [a] -> T.Tree a
+column [a] = T.Node a []
+column (a:as) = T.Node a [column as]
 
-mergeBy :: (t -> t -> Ordering) -> [t] -> [t] -> [t]
-mergeBy _ a [] = a
-mergeBy _ [] b = b
-mergeBy cmp (a:as) (b:bs)
-    | cmp a b == LT = a : mergeBy cmp as (b:bs)
-    | otherwise = b : mergeBy cmp (a:as) bs
+diagonal :: [Integer] -> T.Tree (Integer, Integer, Integer)
+diagonal [a] = T.Node (a * a, a, a) []
+diagonal (a:as) = T.Node (a * a, a, a) [diagonal as, column $ map (\n -> (a * n, a, n)) as]
+
+_1of3 :: (t1, t2, t3) -> t1
+_1of3 (v, _, _) = v
