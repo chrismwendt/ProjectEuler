@@ -2,7 +2,7 @@ import Data.List
 import Data.Maybe
 
 main :: IO ()
-main = print $ fromJust $ find palindrome $ descendingProducts ns ns where
+main = print $ fromJust $ find (palindrome . show) $ descendingProducts ns ns where
     ns = [999, 998 .. 100]
 
 descendingProducts :: (Num a, Ord a) => [a] -> [a] -> [a]
@@ -13,9 +13,8 @@ descendingProducts (n:ns) (m:ms) = n * m : mergeBy descending column rest where
     column = map (* n) ms
     rest = descendingProducts ns ms
 
-palindrome :: Show a => a -> Bool
-palindrome n = s == reverse s where
-    s = show n
+palindrome :: Eq a => [a] -> Bool
+palindrome s = s == reverse s
 
 mergeBy :: (t -> t -> Ordering) -> [t] -> [t] -> [t]
 mergeBy _ a [] = a
