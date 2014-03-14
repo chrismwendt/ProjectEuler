@@ -3,7 +3,7 @@ import Data.Maybe
 
 main :: IO ()
 main = print $ fromJust $ find palindrome $ descendingProducts ns ns where
-    ns = [999,998..100]
+    ns = [999, 998 .. 100]
 
 descendingProducts [] _ = []
 descendingProducts _ [] = []
