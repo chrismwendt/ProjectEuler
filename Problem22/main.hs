@@ -6,7 +6,7 @@ import Data.List
 main :: IO ()
 main = do
     text <- readFile "names.txt"
-    print . sum . zipWith (*) [1..] . map worth . sort . splitOn "," . filter (/= '"') $ text
+    print . sum . zipWith (*) [1 .. ] . map worth . sort . splitOn ", " . filter (/= '"') $ text
 
 splitOn :: String -> String -> [String]
 splitOn s = map T.unpack . T.splitOn (T.pack s) . T.pack

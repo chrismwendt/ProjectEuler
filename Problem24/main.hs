@@ -1,7 +1,7 @@
 import Data.List
 
 main :: IO ()
-main = putStrLn $ nthPermutation (1000000 - 1) ['0'..'9']
+main = putStrLn $ nthPermutation (1000000 - 1) ['0' .. '9']
 
 nthPermutation :: Int -> [a] -> [a]
 nthPermutation 0 a = a
@@ -13,4 +13,4 @@ remove i as = l ++ tail r where
     (l, r) = splitAt i as
 
 factorial :: (Enum a, Num a) => a -> a
-factorial n = product [1..n]
+factorial n = product [1 .. n]

@@ -2,7 +2,7 @@ import Data.Ratio
 import Data.List
 
 main :: IO ()
-main = print $ denominator $ product $ map (uncurry (%)) $ filter isNontrivial $ [(n, d) | n <- [10..99], d <- [n + 1..99]]
+main = print $ denominator $ product $ map (uncurry (%)) $ filter isNontrivial $ [(n, d) | n <- [10 .. 99], d <- [n + 1 .. 99]]
 
 isNontrivial :: (Integral a, Read a, Show a) => (a, a) -> Bool
 isNontrivial (n, d)

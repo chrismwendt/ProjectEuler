@@ -25,7 +25,7 @@ listChoose' :: Int -> [b] -> [[b]]
 listChoose' k l = map (map (l !!)) $ map elems $ catMaybes $ takeWhile isJust $ iterate f (Just $ lc)
     where
     n = length l
-    lc = listChoose n k [0..n - 1]
+    lc = listChoose n k [0 .. n - 1]
     f (Just l) = next l
     f Nothing = Nothing
 

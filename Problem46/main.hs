@@ -11,7 +11,7 @@ solutions =
         all (not . isPrime) $ map (\s -> c - 2 * s) $ ss]
 
 oddComposites :: [Integer]
-oddComposites = filter (not . isPrime) [3,5..]
+oddComposites = filter (not . isPrime) [3, 5 .. ]
 
 squares :: [Integer]
-squares = map (^2) [1..]
+squares = map (^2) [1 .. ]

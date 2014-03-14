@@ -6,10 +6,10 @@ import Data.Maybe
 main :: IO ()
 main = print $ fst $ maximumBy (compare `on` (length . snd)) $ zip ps $ map solutions ps
     where
-    ps = [3..1000]
+    ps = [3 .. 1000]
 
 solutions :: Integer -> [[Integer]]
-solutions p = nub $ catMaybes $ map (solution p) [1..p - 1]
+solutions p = nub $ catMaybes $ map (solution p) [1 .. p - 1]
 
 solution :: Integer -> Integer -> Maybe [Integer]
 solution p a

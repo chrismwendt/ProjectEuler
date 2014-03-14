@@ -20,7 +20,7 @@ cyclicPermutations :: [a] -> [[a]]
 cyclicPermutations (a:as) = map (a :) $ permutations as
 
 polygons :: [[Int]]
-polygons = map (\f -> takeWhile (< 10000) $ dropWhile (< 1000) $ map f [1..]) nToPolygon
+polygons = map (\f -> takeWhile (< 10000) $ dropWhile (< 1000) $ map f [1 .. ]) nToPolygon
 
 nToPolygon :: [Int -> Int]
 nToPolygon =

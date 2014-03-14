@@ -6,7 +6,7 @@ import qualified Control.Monad.Loops as L
 import qualified Control.Monad.State as S
 
 main :: IO ()
-main = print $ count (odd . length . snd) $ map continuedFraction $ filter (not . isSquare) [1..10000]
+main = print $ count (odd . length . snd) $ map continuedFraction $ filter (not . isSquare) [1 .. 10000]
 
 count :: (a -> Bool) -> [a] -> Integer
 count f = genericLength . filter f

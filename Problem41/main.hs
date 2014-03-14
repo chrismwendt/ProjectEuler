@@ -4,10 +4,10 @@ import Data.Maybe
 import Data.Char
 
 main :: IO ()
-main = print $ fromJust $ find isPrime $ concatMap pandigitals (reverse [1..9])
+main = print $ fromJust $ find isPrime $ concatMap pandigitals (reverse [1 .. 9])
 
 pandigitals :: Int -> [Int]
-pandigitals n = map (read . nthPermutation (reverse ['1'..intToDigit n])) [0..factorial n - 1]
+pandigitals n = map (read . nthPermutation (reverse ['1' .. intToDigit n])) [0 .. factorial n - 1]
 
 nthPermutation :: [a] -> Int -> [a]
 nthPermutation a 0 = a
@@ -21,4 +21,4 @@ remove i as = l ++ tail r
     (l, r) = splitAt i as
 
 factorial :: (Enum a, Num a) => a -> a
-factorial n = product [1..n]
+factorial n = product [1 .. n]

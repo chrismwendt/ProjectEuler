@@ -9,7 +9,7 @@ import qualified Control.Monad.State as S
 -- http://mathworld.wolfram.com/PellEquation.html
 
 main :: IO ()
-main = print $ maximumBy (comparing solveX) $ filter (not . isSquare) [1..1000]
+main = print $ maximumBy (comparing solveX) $ filter (not . isSquare) [1 .. 1000]
 
 solveX :: Integer -> Integer
 solveX n = numerator $ convergent $ take (f $ length ls - 1) (l : cycle ls)

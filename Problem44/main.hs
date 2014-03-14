@@ -10,8 +10,8 @@ main = print $ head solutions
 solutions :: [Integer]
 solutions =
     [pd |
-        (d, pd) <- zip [1..] pentagons,
-        (o, po) <- zip [1..d - 1] pentagons,
+        (d, pd) <- zip [1 .. ] pentagons,
+        (o, po) <- zip [1 .. d - 1] pentagons,
         let (j, r) =  (pd - po) `divMod` (3 * o),
         r == 0,
         isPentagonal (2 * pentagon j + pd)]
@@ -34,4 +34,4 @@ pentagon :: Integral a => a -> a
 pentagon n = n * (3 * n - 1) `div` 2
 
 pentagons :: [Integer]
-pentagons = map pentagon [1..]
+pentagons = map pentagon [1 .. ]

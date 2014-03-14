@@ -1,7 +1,7 @@
 import Data.List
 
 main :: IO ()
-main = putStrLn . show . head $ map product [[a,b,c] | b <- [292..499], let (a, m) = (500000 - 1000 * b) `divMod` (1000 - b), let c = 1000 - a - b, m == 0]
+main = putStrLn . show . head $ map product [[a, b, c] | b <- [292 .. 499], let (a, m) = (500000 - 1000 * b) `divMod` (1000 - b), let c = 1000 - a - b, m == 0]
 
 -- (0) given a < b < c
 -- (1) given a^2 + b^2 = c^2
@@ -15,5 +15,5 @@ main = putStrLn . show . head $ map product [[a,b,c] | b <- [292..499], let (a, 
 -- 0 < a, so 0 < (3)(b). b cannot exceed the value for which 1 == (3)(b) = 499
 -- (5) c = 1000 - (3)(b) - b
 -- b < c, so b < 1000 - (3)(b) - b. 
--- c has a valid value on the range of b [1..707]
--- intersecting these two ranges [292..499] and [1..707] gives [292..499] as the search space.
+-- c has a valid value on the range of b [1 .. 707]
+-- intersecting these two ranges [292 .. 499] and [1 .. 707] gives [292 .. 499] as the search space.

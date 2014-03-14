@@ -13,7 +13,7 @@ families :: String -> [[String]]
 families string = map (family string) (masks string)
 
 family :: String -> String -> [String]
-family n mask = filter (not . isPrefixOf "0") $ map (replace mask '*') ['0'..'9']
+family n mask = filter (not . isPrefixOf "0") $ map (replace mask '*') ['0' .. '9']
 
 masks :: String -> [String]
 masks string = map (\u -> replace string u '*') $ nub string

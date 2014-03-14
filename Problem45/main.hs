@@ -4,7 +4,7 @@ main = print $ head $ filter (> 40755) solutions
 solutions :: [Integer]
 solutions =
     [t |
-        t <- map triangle [1..],
+        t <- map triangle [1 .. ],
         and $ map ($ t) [isPentagonal, isHexagonal]]
 
 triangle :: Integral a => a -> a
