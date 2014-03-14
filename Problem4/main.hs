@@ -18,8 +18,8 @@ palindrome n = s == reverse s where
     s = show n
 
 mergeBy :: (t -> t -> Ordering) -> [t] -> [t] -> [t]
-mergeBy cmp a [] = a
-mergeBy cmp [] b = b
+mergeBy _ a [] = a
+mergeBy _ [] b = b
 mergeBy cmp (a:as) (b:bs)
     | cmp a b == LT = a : mergeBy cmp as (b:bs)
     | otherwise = b : mergeBy cmp (a:as) bs
