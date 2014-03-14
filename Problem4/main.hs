@@ -6,7 +6,7 @@ import qualified Data.Heap as H
 import qualified Data.Tree as T
 import Data.Ord
 
-instance Ord (T.Tree Integer) where
+instance Ord a => Ord (T.Tree a) where
     compare = comparing T.rootLabel
 
 main :: IO ()
