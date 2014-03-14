@@ -2,7 +2,7 @@ import Data.List
 import Data.Maybe
 
 main :: IO ()
-main = print . fst . fromJust . find ((> 500) . snd) $ map (\i -> (triangle i, triangleFactors i)) [1 .. ]
+main = print $ fst $ fromJust $ find ((> 500) . snd) $ map (\i -> (triangle i, triangleFactors i)) [1 .. ]
 
 triangle :: Integral a => a -> a
 triangle n = n * (n + 1) `div` 2

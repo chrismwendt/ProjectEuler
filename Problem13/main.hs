@@ -1,5 +1,5 @@
 main :: IO ()
-main = putStrLn . take 10 . show . sum . map read . lines $ numbers
+main = putStrLn $ take 10 $ show $ sum $ map read $ lines $ numbers
 
 numbers :: String
 numbers =

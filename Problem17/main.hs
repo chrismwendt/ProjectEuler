@@ -1,5 +1,5 @@
 main :: IO ()
-main = print . length . concat . concatMap words . map verbalize $ [1 .. 1000]
+main = print $ length $ concat $ concatMap words $ map verbalize $ [1 .. 1000]
 
 verbalize :: Int -> [Char]
 verbalize n

@@ -2,7 +2,7 @@ import Data.List
 import Data.Maybe
 
 main :: IO ()
-main = print . maximum . map product $ consecutives2D 4 grid
+main = print $ maximum $ map product $ consecutives2D 4 grid
 
 consecutives2D :: Int -> [[a]] -> [[a]]
 consecutives2D n = concatMap (consecutives n) . slices

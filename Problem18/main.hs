@@ -1,9 +1,9 @@
 main :: IO ()
-main = print . head . foldr1 f $ triangle where
+main = print $ head $ foldr1 f $ triangle where
     f r b = zipWith (+) r $ zipWith max b (tail b)
 
 triangle :: [[Int]]
-triangle = map (map read) . map words . lines $
+triangle = map (map read) $ map words $ lines $
     "75\n\
     \95 64\n\
     \17 47 82\n\
