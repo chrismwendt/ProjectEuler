@@ -1,7 +1,7 @@
 /*
  * c = sqrt(a^2 + b^2)
  * a + b + sqrt(a^2 + b^2) = 1000
- * ... solve for b ... woflram
+ * ... solve for b ... wolfram
  * b = 1000(a-500)/(a-1000)
  */
 
