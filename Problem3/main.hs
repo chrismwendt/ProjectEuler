@@ -1,13 +1,9 @@
+import Data.List
+
 main :: IO ()
-main = print $ maximum $ primeFactors (600851475143 :: Integer)
+main = print $ maximum $ primeFactors 600851475143
 
-isFactor :: Integral a => a -> a -> Bool
-isFactor a b = mod b a == 0
-
-factors :: Integral t => t -> [t]
-factors n = [i | i <- [1..n], isFactor i n]
-
-primeFactors :: Integral a => a -> [a]
-primeFactors 1 = []
-primeFactors n = p : primeFactors (n `div` p) where
-    p = factors n !! 1
+primeFactors :: Integer -> [Integer]
+primeFactors n = case find ((== 0) . mod n) [2 .. n] of
+    Just k -> k : primeFactors (n `div` k)
+    Nothing -> []
