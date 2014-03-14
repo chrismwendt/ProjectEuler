@@ -1,16 +1,3 @@
-/*
- * 100*100
- * 100*101
- * 100*102...
- * 101*101
- * 101*102...
- * 102*102...
- * 
- * 998*998
- * 998*999
- * 999*999
- */
-
 public class main {
     public static void main(String[] args) {
         int largestPalindrome = 0;
