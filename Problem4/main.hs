@@ -1,8 +1,13 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 import Data.List
 import Data.Maybe
 import qualified Data.Heap as H
+import qualified Data.Tree as T
+import Data.Ord
 
-data Node a = Node a [Node a] deriving (Eq, Ord, Show)
+instance Ord (T.Tree Integer) where
+    compare = comparing T.rootLabel
 
 main :: IO ()
 main = print $ fromJust $ find (palindrome . show) $ descendingProducts [999, 998 .. 100]
@@ -11,14 +16,14 @@ palindrome :: Eq a => [a] -> Bool
 palindrome s = s == reverse s
 
 descendingProducts :: [Integer] -> [Integer]
-descendingProducts as = unfoldr (fmap f . H.view) (H.singleton $ diagonalNode as :: H.MaxHeap (Node Integer))
+descendingProducts as = unfoldr (fmap f . H.view) (H.singleton $ diagonal as :: H.MaxHeap (T.Tree Integer))
     where
-    f (Node i ns, t) = (i, t `H.union` H.fromList ns)
+    f (T.Node i ns, t) = (i, t `H.union` H.fromList ns)
 
-columnNode :: [a] -> Node a
-columnNode [a] = Node a []
-columnNode (a:as) = Node a [columnNode as]
+column :: [a] -> T.Tree a
+column [a] = T.Node a []
+column (a:as) = T.Node a [column as]
 
-diagonalNode :: [Integer] -> Node Integer
-diagonalNode [a] = Node (a * a) []
-diagonalNode (a:as) = Node (a * a) [diagonalNode as, columnNode $ map (* a) as]
+diagonal :: [Integer] -> T.Tree Integer
+diagonal [a] = T.Node (a * a) []
+diagonal (a:as) = T.Node (a * a) [diagonal as, column $ map (* a) as]
