@@ -1,5 +1,5 @@
 main :: IO ()
-main = print $ maximum $ primeFactors 600851475143
+main = print $ maximum $ primeFactors (600851475143 :: Integer)
 
 isFactor :: Integral a => a -> a -> Bool
 isFactor a b = mod b a == 0
