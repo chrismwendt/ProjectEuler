@@ -1,7 +1,7 @@
 import Data.Char
 
 main :: IO ()
-main = print $ sum $ map fst $ filter (\(a, b) -> a == b) $ zip ns $ map (sum . map factorial . digits) ns
+main = print $ sum $ map fst $ filter (uncurry (==)) $ zip ns $ map (sum . map factorial . digits) ns
     where
     ns = [3 .. 9999999]
 
