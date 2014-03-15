@@ -1,10 +1,9 @@
 import Data.Numbers.Primes
+import Data.List
 
 main :: IO ()
 main = print $ length $ filter isCyclicPrime $ takeWhile (< 1000000) primes
 
-isCyclicPrime :: Show a => a -> Bool
-isCyclicPrime n = all isPrime $ map (\i -> read $ take l $ drop i $ cycle s) [1 .. l]
+isCyclicPrime n = all (isPrime . read) $ init $ zipWith (++) (tails s) (inits s)
     where
-    l = length s
     s = show n
