@@ -3,7 +3,7 @@ import Data.List
 import qualified Data.Map as M
 
 main :: IO ()
-main = print $ sum $ filter amicable $ [1 .. 9999]
+main = print $ sum $ filter amicable [1 .. 9999]
 
 amicable :: Integral a => a -> Bool
 amicable n = n == d (d n) && n /= d n where
