@@ -1,8 +1,9 @@
 import Data.List
 import Data.Function
+import Data.Ord
 
 main :: IO ()
-main = print $ fst $ maximumBy (compare `on` snd) $ zip [1 .. ] $ map (cycleLength 1) [1 .. 999]
+main = print $ fst $ maximumBy (comparing snd) $ zip [1 .. ] $ map (cycleLength 1) [1 .. 999]
 
 cycleLength :: Integral a => a -> a -> Int
 cycleLength n d = cycleLength' n d []

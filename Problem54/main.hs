@@ -6,6 +6,7 @@ import Text.Read
 import Text.ParserCombinators.ReadP hiding (choice)
 import Text.ParserCombinators.ReadPrec hiding (choice)
 import Data.Tuple
+import Data.Ord
 
 main :: IO ()
 main = do
@@ -104,7 +105,7 @@ handRank cards
     | otherwise                               = HighCards     (reverse $ sort cards)
     where
     sRanks = sort $ map rank cards
-    rankGroups = reverse $ sortBy (compare `on` length) $ groupWith rank cards
+    rankGroups = reverse $ sortBy (comparing length) $ groupWith rank cards
     rankCounts = map length rankGroups
     isStraight = sRanks == [head sRanks .. last sRanks]
     isFlush = length (nub $ map suit cards) == 1

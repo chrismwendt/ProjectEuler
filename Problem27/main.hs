@@ -1,9 +1,10 @@
 import Data.List
 import Data.Numbers.Primes
 import Data.Function
+import Data.Ord
 
 main :: IO ()
-main = print $ uncurry (*) $ fst $ maximumBy (compare `on` snd) $ zip formulas (map runLength formulas)
+main = print $ uncurry (*) $ fst $ maximumBy (comparing snd) $ zip formulas (map runLength formulas)
     where
     formulas = [(a, b) | a <- [-999 .. 999], b <- [-999 .. 999]]
 

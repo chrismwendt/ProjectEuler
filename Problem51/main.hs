@@ -2,12 +2,13 @@ import Data.Numbers.Primes
 import Data.Maybe
 import Data.List
 import Data.Function
+import Data.Ord
 
 main :: IO ()
 main = print $ minimum $ fromJust $ find (\f -> length f == 8) $ map longestPrimeFamily primes
 
 longestPrimeFamily :: Integer -> [Integer]
-longestPrimeFamily p = maximumBy (compare `on` length) $ map (filter isPrime) $ map (map read) $ families (show p)
+longestPrimeFamily p = maximumBy (comparing length) $ map (filter isPrime) $ map (map read) $ families (show p)
 
 families :: String -> [[String]]
 families string = map (family string) (masks string)
