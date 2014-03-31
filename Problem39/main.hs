@@ -1,6 +1,4 @@
 import Data.List
-import Data.Function
-import Data.Ratio
 import Data.Maybe
 import Data.Ord
 
