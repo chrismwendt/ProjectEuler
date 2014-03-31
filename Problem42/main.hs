@@ -17,4 +17,5 @@ worth = sum . map (\c -> ord c - ord 'A'  + 1)
 triangles26 :: S.Set Int
 triangles26 = S.fromList $ take 26 $ triangles
 
+triangles :: [Int]
 triangles = map (\n -> (n * (n + 1) `div` 2)) [1 .. ]
