@@ -8,10 +8,10 @@ main = do
     text <- readFile "words.txt"
     print $ length $ filter isTriangleWord $ splitOn "," $ filter (/= '"') $ text
 
-isTriangleWord :: [Char] -> Bool
+isTriangleWord :: String -> Bool
 isTriangleWord n = S.member (worth n) triangles26
 
-worth :: [Char] -> Int
+worth :: String -> Int
 worth = sum . map (\c -> ord c - ord 'A'  + 1)
 
 triangles26 :: S.Set Int
