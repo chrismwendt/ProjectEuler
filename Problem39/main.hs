@@ -2,9 +2,10 @@ import Data.List
 import Data.Function
 import Data.Ratio
 import Data.Maybe
+import Data.Ord
 
 main :: IO ()
-main = print $ fst $ maximumBy (compare `on` (length . snd)) $ zip ps $ map solutions ps
+main = print $ fst $ maximumBy (comparing (length . snd)) $ zip ps $ map solutions ps
     where
     ps = [3 .. 1000]
 
