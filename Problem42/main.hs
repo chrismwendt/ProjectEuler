@@ -1,7 +1,6 @@
 import System.IO
 import Data.List.Split
 import Data.Char
-import Data.List
 import qualified Data.Set as S
 
 main :: IO ()
